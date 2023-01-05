@@ -9,6 +9,7 @@ module Decidim
           return permission_action unless user&.admin?
 
           allow! if can_access?
+          allow! if can_import_projects?
 
           permission_action
         end
@@ -16,6 +17,11 @@ module Decidim
         def can_access?
           permission_action.subject == :budgets_importer &&
             permission_action.action == :read
+        end
+
+        def can_import_projects?
+          permission_action.subject == :projects &&
+            permission_action.action == :import
         end
       end
     end

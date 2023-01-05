@@ -12,14 +12,13 @@ module Decidim::BudgetsImporter::Admin
         current_organization: organization
       }
     end
+    let(:user) { create :user, :admin, organization: organization }
     let(:action) do
       { scope: :admin, action: :read, subject: :budgets_importer }
     end
     let(:permission_action) { Decidim::PermissionAction.new(**action) }
 
     context "when user is admin" do
-      let(:user) { create :user, :admin, organization: organization }
-
       it { is_expected.to be_truthy }
 
       context "when scope is not admin" do
@@ -29,6 +28,14 @@ module Decidim::BudgetsImporter::Admin
 
         it_behaves_like "permission is not set"
       end
+    end
+
+    context "when admin access to projects import" do
+      let(:action) do
+        { scope: :admin, action: :import, subject: :projects }
+      end
+
+      it { is_expected.to be_truthy }
     end
 
     context "when user is not admin" do
