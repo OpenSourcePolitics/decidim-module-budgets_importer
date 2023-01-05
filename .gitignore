@@ -20,3 +20,4 @@ spec/decidim_dummy_app
 
 # default development application
 development_app
+.rubocop-https*yml
