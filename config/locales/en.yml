@@ -8,6 +8,10 @@ en:
           import_accepted_formats: The file format must be one of CSV, JSON or XLSX
           import_document: Content must be exported from a Decidim application
     budgets_importer:
+      command:
+        import:
+          error:
+            decidim_budgets_project: Project creation failed on import, unknown ID for the budget
       admin:
         projects_imports:
           new:

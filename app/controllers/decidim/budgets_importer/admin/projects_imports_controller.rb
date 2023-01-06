@@ -18,12 +18,23 @@ module Decidim
 
           ImportProject.call(@form) do
             on(:ok) do
-              flash[:notice] = "C'est bon"
+              flash[:notice] = "Import succeeded"
+
               render :new
             end
 
-            on(:invalid) do
-              flash.now[:alert] = "C'est pas bon"
+            on(:invalid) do |registry|
+              registry&.each do |hash|
+                flash_key = if hash[:type] == :alert
+                              hash[:type]
+                            else
+                              "#{hash[:type]}_#{rand(1...1000)}"
+                            end
+
+                flash.now[flash_key] = hash[:message]
+              end
+              flash.now[:alert] ||= "C'est pas bon"
+
               render :new
             end
 
@@ -43,5 +54,3 @@ module Decidim
     end
   end
 end
-
-
