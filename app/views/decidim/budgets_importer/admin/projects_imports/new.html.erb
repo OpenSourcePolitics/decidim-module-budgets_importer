@@ -1,0 +1,22 @@
+<%= decidim_form_for(@form, url: budget_projects_import_index_path(budget), html: { class: "form import_projects" }) do |f| %>
+  <div class="card">
+    <div class="card-divider">
+      <h2 class="card-title"><%= t(".title") %></h2>
+    </div>
+
+    <div class="card-section">
+      <div class="column xlarge-8">
+        <fieldset>
+          <legend><%= t(".document_legend") %> </legend>
+          <div class="row column">
+            <%= f.upload :document, optional: false, help_i18n_messages: ["import_document", "import_accepted_formats"] %>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+  <div class="button--double form-general-submit">
+    <%= f.submit t(".create") %>
+  </div>
+<% end %>
+

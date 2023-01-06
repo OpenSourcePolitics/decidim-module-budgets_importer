@@ -1,6 +1,19 @@
 ---
 en:
   decidim:
+    forms:
+      file_help:
+        file:
+          explanation: Join the exported budget projects JSON file
+          import_accepted_formats: The file format must be one of CSV, JSON or XLSX
+          import_document: Content must be exported from a Decidim application
+    budgets_importer:
+      admin:
+        projects_imports:
+          new:
+            document_legend: Join the document to import
+            create: Import
+            title: Import projects in current budget
     components:
       budgets_importer:
         name: BudgetsImporter
