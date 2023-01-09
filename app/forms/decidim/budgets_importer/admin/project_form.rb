@@ -49,12 +49,6 @@ module Decidim
           self.decidim_category_id = model.categorization.decidim_category_id
         end
 
-        def proposals
-          @proposals ||= Decidim.find_resource_manifest(:proposals).try(:resource_scope, current_component)
-                           &.where(id: proposal_ids)
-                           &.order(title: :asc)
-        end
-
         # Finds the Budget from the decidim_budgets_budget_id.
         #
         # Returns a Decidim::Budgets:Budget

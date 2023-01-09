@@ -44,47 +44,61 @@ module Decidim
 
         def import_project_from(list)
           list.each { |hash| new_project(hash) }
+        rescue Decidim::BudgetsImporter::ProposalNotFound => e
+          broadcast_registry << { type: :alert, message: "Proposals not found for project '#{e.project_title}' : ids '#{e.ids.join(",")}'" }
         rescue StandardError => e
-          broadcast_registry << { type: :alert, message: "Unexpected error occurred '#{e.class}' for project '#{hash["title"][current_user.locale]}'" }
+          broadcast_registry << { type: :alert, message: "Unexpected error occurred '#{e.class}' for project ''" }
         end
-      end
 
-      def projects_h
-        @projects_h ||= JSON.parse(import_form.document_text)
-      end
+        def projects_h
+          @projects_h ||= JSON.parse(import_form.document_text)
+        end
 
-      def new_project(hash)
-        project_h = {
-          component: current_component,
-          title: hash["title"],
-          description: hash["description"],
-          proposal_ids: hash.fetch("related_proposals", []),
-          budget_amount: hash["budget_amount"],
-          decidim_scope_id: hash.dig("scope", "id"),
-          decidim_category_id: category_id(hash)
-        }
+        def new_project(hash)
+          project_h = {
+            component: current_component,
+            title: hash["title"],
+            description: hash["description"],
+            proposal_ids: related_proposals_ids(hash),
+            budget_amount: hash["budget_amount"],
+            decidim_scope_id: hash.dig("scope", "id"),
+            decidim_category_id: category_id(hash)
+          }
 
-        form = form(Decidim::BudgetsImporter::Admin::ProjectForm).from_params(project_h, component: current_component, budget: budget)
-        Decidim::Budgets::Admin::CreateProject.call(form) do
-          on(:invalid) do
-            broadcast_registry << { type: :alert, message: "Project '#{hash["title"][current_user.locale]}' is invalid : #{form.errors.map { |k, v| "#{k} #{v}" }.first} " }
+          form = form(Decidim::BudgetsImporter::Admin::ProjectForm).from_params(project_h, component: current_component, budget: budget)
+          Decidim::Budgets::Admin::CreateProject.call(form) do
+            on(:invalid) do
+              broadcast_registry << { type: :alert, message: "Project '#{hash["title"][current_user.locale]}' is invalid : #{form.errors.map { |k, v| "#{k} #{v}" }.first} " }
+            end
           end
         end
-      end
 
-      # ProjectForm requires the category_id to be present in current_component, if not returns nil
-      def category_id(hash)
-        return hash.dig("category", "id") if current_component.categories.find_by(id: hash.dig("category", "id")).present?
+        # ProjectForm requires the category_id to be present in current_component, if not returns nil
+        def category_id(hash)
+          return hash.dig("category", "id") if current_component.categories.find_by(id: hash.dig("category", "id")).present?
 
-        broadcast_registry << {
-          type: :warning,
-          message: "Project '#{hash.dig("title", current_user.locale)}' : Category '#{hash.dig("category", "name", current_user.locale)}' does not exist on this component"
-        }
-        nil
-      end
+          broadcast_registry << {
+            type: :warning,
+            message: "Project '#{hash.dig("title", current_user.locale)}' : Category '#{hash.dig("category", "name", current_user.locale)}' does not exist on this component"
+          }
+          nil
+        end
 
-      def broadcast_registry
-        @broadcast_registry ||= []
+        def broadcast_registry
+          @broadcast_registry ||= []
+        end
+
+        def related_proposals_ids(hash)
+          related_proposals = hash.fetch("related_proposals", [])
+          proposals = Decidim.find_resource_manifest(:proposals).try(:resource_scope, current_component)&.where(id: related_proposals)&.order(title: :asc)
+          proposals_ids = proposals.map(&:id)
+
+          unless (related_proposals - proposals_ids).empty?
+            raise Decidim::BudgetsImporter::ProposalNotFound.new("Proposals not found", hash["title"][current_user.locale], (related_proposals - proposals_ids))
+          end
+
+          proposals_ids
+        end
       end
     end
   end
