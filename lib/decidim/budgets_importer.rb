@@ -21,5 +21,17 @@ module Decidim
         @ids = ids
       end
     end
+    class CategoryNotFound < StandardError
+      attr_reader :id, :project_title
+
+      def initialize(message, project_title, id)
+        # Call the parent's constructor to set the message
+        super(message)
+
+        # Store the action in an instance variable
+        @project_title = project_title
+        @id = id
+      end
+    end
   end
 end

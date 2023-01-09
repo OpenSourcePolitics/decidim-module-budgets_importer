@@ -46,6 +46,8 @@ module Decidim
           list.each { |hash| new_project(hash) }
         rescue Decidim::BudgetsImporter::ProposalNotFound => e
           broadcast_registry << { type: :alert, message: "Proposals not found for project '#{e.project_title}' : ids '#{e.ids.join(",")}'" }
+        rescue Decidim::BudgetsImporter::CategoryNotFound => e
+          broadcast_registry << { type: :alert, message: "Category ID:'#{e.id}' not found for project '#{e.project_title}'" }
         rescue StandardError => e
           broadcast_registry << { type: :alert, message: "Unexpected error occurred '#{e.class}' for project ''" }
         end
@@ -77,11 +79,7 @@ module Decidim
         def category_id(hash)
           return hash.dig("category", "id") if current_component.categories.find_by(id: hash.dig("category", "id")).present?
 
-          broadcast_registry << {
-            type: :warning,
-            message: "Project '#{hash.dig("title", current_user.locale)}' : Category '#{hash.dig("category", "name", current_user.locale)}' does not exist on this component"
-          }
-          nil
+          raise Decidim::BudgetsImporter::CategoryNotFound.new("Category not found", hash["title"][current_user.locale], hash.dig("category", "id"))
         end
 
         def broadcast_registry
