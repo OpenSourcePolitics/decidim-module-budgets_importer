@@ -11,35 +11,38 @@ module Decidim
           @form = form(Decidim::BudgetsImporter::Admin::ProjectsImportForm).instance
         end
 
+        def show
+          render :new
+        end
+
         def create
           enforce_permission_to :import, :projects
 
           @form = form(Decidim::BudgetsImporter::Admin::ProjectsImportForm).from_params(params)
 
           ImportProject.call(@form) do
-            on(:ok) do
-              flash[:notice] = "Import succeeded"
+            on(:ok) do |broadcast_registry|
+              broadcast_registry&.each do |hash|
+                flash.now["#{hash[:type]}_#{rand(1...1000)}"] = hash[:message]
+              end
+              flash.now[:notice] = "Import succeeded"
 
               render :new
             end
 
             on(:invalid) do |registry|
               registry&.each do |hash|
-                flash_key = if hash[:type] == :alert
-                              hash[:type]
-                            else
-                              "#{hash[:type]}_#{rand(1...1000)}"
-                            end
+                flash_key = hash[:type] == :alert ? hash[:type] : "#{hash[:type]}_#{rand(1...1000)}"
 
                 flash.now[flash_key] = hash[:message]
               end
-              flash.now[:alert] ||= "C'est pas bon"
+              flash.now[:alert] ||= "Import failed"
 
               render :new
             end
 
             on(:empty_file) do
-              flash.now[:alert] = "Le fichier semble vide..."
+              flash.now[:alert] = "File is empty"
               render :new
             end
           end
