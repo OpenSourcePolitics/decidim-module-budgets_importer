@@ -43,7 +43,14 @@ module Decidim
         attr_reader :import_form
 
         def import_project_from(list)
-          list.each { |hash| new_project(hash) }
+          forms = list.map { |hash| new_project(hash) }
+          forms.each do |form|
+            Decidim::Budgets::Admin::CreateProject.call(form) do
+              on(:invalid) do
+                broadcast_registry << { type: :alert, message: "Project '#{form.project[current_user.locale]}' is invalid : #{form.errors.map { |k, v| "#{k} #{v}" }.first} " }
+              end
+            end
+          end
         rescue Decidim::BudgetsImporter::ProposalNotFound => e
           broadcast_registry << { type: :alert, message: "Proposals not found for project '#{e.project_title}' : ids '#{e.ids.join(",")}'" }
         rescue Decidim::BudgetsImporter::CategoryNotFound => e
@@ -67,12 +74,7 @@ module Decidim
             decidim_category_id: category_id(hash)
           }
 
-          form = form(Decidim::BudgetsImporter::Admin::ProjectForm).from_params(project_h, component: current_component, budget: budget)
-          Decidim::Budgets::Admin::CreateProject.call(form) do
-            on(:invalid) do
-              broadcast_registry << { type: :alert, message: "Project '#{hash["title"][current_user.locale]}' is invalid : #{form.errors.map { |k, v| "#{k} #{v}" }.first} " }
-            end
-          end
+          form(Decidim::BudgetsImporter::Admin::ProjectForm).from_params(project_h, component: current_component, budget: budget)
         end
 
         # ProjectForm requires the category_id to be present in current_component, if not returns nil
