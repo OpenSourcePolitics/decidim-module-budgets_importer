@@ -1,5 +1,12 @@
 ---
 en:
+  activemodel:
+    errors:
+      models:
+        budgets_importer:
+          attributes:
+            document:
+              empty_content: content is empty
   decidim:
     forms:
       file_help:

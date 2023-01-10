@@ -34,6 +34,14 @@ module Decidim
           it { is_expected.to be_invalid }
         end
 
+        context "when document content is not present" do
+          before do
+            allow(form).to receive(:document_text).and_return("")
+          end
+
+          it { is_expected.to be_invalid }
+        end
+
         context "when mime type is csv" do
           let(:mime_type) { "text/csv" }
 

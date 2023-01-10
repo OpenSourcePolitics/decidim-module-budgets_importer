@@ -29,6 +29,7 @@ module Decidim
         attribute :document
         validates :document, presence: true
         validate :document_type_must_be_valid
+        validate :document_must_have_content
 
         def document_text
           @document_text ||= document&.read
@@ -38,6 +39,12 @@ module Decidim
           return if valid_mime_types.include?(document_type)
 
           errors.add(:document, i18n_invalid_document_type_text)
+        end
+
+        def document_must_have_content
+          return if document_text.present?
+
+          errors.add(:document, i18n_empty_content)
         end
 
         # Return ACCEPTED_MIME_TYPES plus `text/plain` for better markdown support
@@ -53,6 +60,10 @@ module Decidim
           I18n.t("invalid_document_type",
                  scope: "activemodel.errors.models.assembly.attributes.document",
                  valid_mime_types: i18n_valid_mime_types_text)
+        end
+        def i18n_empty_content
+          I18n.t("empty_content",
+                 scope: "activemodel.errors.models.budgets_importer.attributes.document")
         end
 
         def i18n_valid_mime_types_text
