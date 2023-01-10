@@ -169,9 +169,9 @@
     "created_at": "2023-01-09 18:09:27 UTC",
     "url": "http://localhost:3000/processes/doctor-thirsty/f/4/budgets/2/projects/3",
     "related_proposals": [
-      4,
-      3,
-      7
+      1,
+      2,
+      3
     ],
     "related_proposal_titles": [
       "Soluta quidem. Qui.",

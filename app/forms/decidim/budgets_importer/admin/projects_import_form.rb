@@ -61,6 +61,7 @@ module Decidim
                  scope: "activemodel.errors.models.assembly.attributes.document",
                  valid_mime_types: i18n_valid_mime_types_text)
         end
+
         def i18n_empty_content
           I18n.t("empty_content",
                  scope: "activemodel.errors.models.budgets_importer.attributes.document")
