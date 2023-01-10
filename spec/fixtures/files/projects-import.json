@@ -1,0 +1,187 @@
+[
+  {
+    "id": 5,
+    "category": {
+      "id": 1,
+      "name": {
+        "ca": "Autem est asperiores qui libero.",
+        "en": "Accusantium et perferendis qui inventore.",
+        "machine_translations": {
+          "es": "Consequatur minima quibusdam consequuntur expedita."
+        }
+      }
+    },
+    "scope": {
+      "id": 6,
+      "name": {
+        "ca": "South Tuanburgh",
+        "en": "South Tuanburgh",
+        "es": "South Tuanburgh"
+      }
+    },
+    "participatory_space": {
+      "id": 1,
+      "url": "http://localhost:3000/processes/doctor-thirsty?participatory_process_slug=doctor-thirsty"
+    },
+    "component": {
+      "id": 4
+    },
+    "title": {
+      "ca": "Quis omnis.",
+      "en": "Ullam dolorum.",
+      "machine_translations": {
+        "es": "Placeat et."
+      }
+    },
+    "description": {
+      "ca": "<p>Mollitia at laboriosam. Deserunt consequuntur et. Quae consequatur repudiandae.</p>",
+      "en": "<p>Omnis ex quisquam. Ea voluptatem impedit. Quaerat incidunt sed.</p>",
+      "machine_translations": {
+        "es": "<p>Ea facere dolorem. Libero accusamus et. Quos et quidem.</p>"
+      }
+    },
+    "budget": {
+      "id": 2
+    },
+    "budget_amount": 80501159,
+    "confirmed_votes": 0,
+    "comments": 2,
+    "created_at": "2023-01-09 18:09:28 UTC",
+    "url": "http://localhost:3000/processes/doctor-thirsty/f/4/budgets/2/projects/5",
+    "related_proposals": [
+
+    ],
+    "related_proposal_titles": [
+
+    ],
+    "related_proposal_urls": [
+
+    ]
+  },
+  {
+    "id": 4,
+    "category": {
+      "id": 1,
+      "name": {
+        "ca": "Autem est asperiores qui libero.",
+        "en": "Accusantium et perferendis qui inventore.",
+        "machine_translations": {
+          "es": "Consequatur minima quibusdam consequuntur expedita."
+        }
+      }
+    },
+    "scope": {
+      "id": 14,
+      "name": {
+        "ca": "West Denisfort",
+        "en": "West Denisfort",
+        "es": "West Denisfort"
+      }
+    },
+    "participatory_space": {
+      "id": 1,
+      "url": "http://localhost:3000/processes/doctor-thirsty?participatory_process_slug=doctor-thirsty"
+    },
+    "component": {
+      "id": 4
+    },
+    "title": {
+      "ca": "Laudantium incidunt.",
+      "en": "Nostrum voluptatibus.",
+      "machine_translations": {
+        "es": "Eveniet deleniti."
+      }
+    },
+    "description": {
+      "ca": "<p>Odio veritatis mollitia. Voluptatum voluptas officiis. Ipsum eos vel.</p>",
+      "en": "<p>Distinctio harum esse. Nam eligendi praesentium. Temporibus illo fugit.</p>",
+      "machine_translations": {
+        "es": "<p>Ratione recusandae aut. Dicta nobis necessitatibus. Voluptatem perspiciatis nam.</p>"
+      }
+    },
+    "budget": {
+      "id": 2
+    },
+    "budget_amount": 76010897,
+    "confirmed_votes": 0,
+    "comments": 2,
+    "created_at": "2023-01-09 18:09:28 UTC",
+    "url": "http://localhost:3000/processes/doctor-thirsty/f/4/budgets/2/projects/4",
+    "related_proposals": [
+
+    ],
+    "related_proposal_titles": [
+
+    ],
+    "related_proposal_urls": [
+
+    ]
+  },
+  {
+    "id": 3,
+    "category": {
+      "id": 1,
+      "name": {
+        "ca": "Autem est asperiores qui libero.",
+        "en": "Accusantium et perferendis qui inventore.",
+        "machine_translations": {
+          "es": "Consequatur minima quibusdam consequuntur expedita."
+        }
+      }
+    },
+    "scope": {
+      "id": 11,
+      "name": {
+        "ca": "Jammiestad",
+        "en": "Jammiestad",
+        "es": "Jammiestad"
+      }
+    },
+    "participatory_space": {
+      "id": 1,
+      "url": "http://localhost:3000/processes/doctor-thirsty?participatory_process_slug=doctor-thirsty"
+    },
+    "component": {
+      "id": 4
+    },
+    "title": {
+      "ca": "Repudiandae ut.",
+      "en": "Magni accusantium.",
+      "es": "",
+      "machine_translations": {
+        "es": "Illo molestiae."
+      }
+    },
+    "description": {
+      "ca": "<p>Assumenda tempore dicta. Aut magni ut. Quod ipsa reprehenderit.</p>",
+      "en": "<p>Ut dolore perferendis. Consequatur earum molestias. Aliquam quas in.</p>",
+      "es": "",
+      "machine_translations": {
+        "es": "<p>Expedita reiciendis quo. Quo omnis voluptatem. Voluptatem quas libero.</p>"
+      }
+    },
+    "budget": {
+      "id": 2
+    },
+    "budget_amount": 78277833,
+    "confirmed_votes": 0,
+    "comments": 2,
+    "created_at": "2023-01-09 18:09:27 UTC",
+    "url": "http://localhost:3000/processes/doctor-thirsty/f/4/budgets/2/projects/3",
+    "related_proposals": [
+      4,
+      3,
+      7
+    ],
+    "related_proposal_titles": [
+      "Soluta quidem. Qui.",
+      "Soluta quidem.",
+      "Qui iure."
+    ],
+    "related_proposal_urls": [
+      "http://localhost:3000/processes/doctor-thirsty/f/3/proposals/4",
+      "http://localhost:3000/processes/doctor-thirsty/f/3/proposals/3",
+      "http://localhost:3000/processes/doctor-thirsty/f/3/proposals/7"
+    ]
+  }
+]

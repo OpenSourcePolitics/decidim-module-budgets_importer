@@ -9,7 +9,9 @@ module Decidim
       class ProjectsImportForm < Form
         include Decidim::HasUploadValidations
 
+        CSV_MIME_TYPE = "text/csv"
         JSON_MIME_TYPE = "application/json"
+        XLSX_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         # Accepted mime types
         # keys: are used for dynamic help text on admin form.
         # values: are used to validate the file format of imported document.
@@ -17,15 +19,16 @@ module Decidim
         # WARNING: consider adding/removing the relative translation key at
         # decidim.assemblies.admin.new_import.accepted_types when modifying this hash
         ACCEPTED_TYPES = {
-          json: JSON_MIME_TYPE
+          csv: CSV_MIME_TYPE,
+          json: JSON_MIME_TYPE,
+          xlsx: XLSX_MIME_TYPE
         }.freeze
 
         mimic :project
 
         attribute :document
         validates :document, presence: true
-
-        validate :document_type_must_be_valid, if: :document
+        validate :document_type_must_be_valid
 
         def document_text
           @document_text ||= document&.read
@@ -43,7 +46,7 @@ module Decidim
         end
 
         def document_type
-          document.content_type
+          document&.content_type
         end
 
         def i18n_invalid_document_type_text
