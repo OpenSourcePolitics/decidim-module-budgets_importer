@@ -8,6 +8,8 @@ module Decidim
       #
       class ProjectsImportForm < Form
         include Decidim::HasUploadValidations
+        delegate :budget,
+                 to: :context, prefix: false, allow_nil: true
 
         CSV_MIME_TYPE = "text/csv"
         JSON_MIME_TYPE = "application/json"

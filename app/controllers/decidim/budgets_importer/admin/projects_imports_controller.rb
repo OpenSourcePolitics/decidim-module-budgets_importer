@@ -18,7 +18,7 @@ module Decidim
         def create
           enforce_permission_to :import, :projects
 
-          @form = form(Decidim::BudgetsImporter::Admin::ProjectsImportForm).from_params(params)
+          @form = form(Decidim::BudgetsImporter::Admin::ProjectsImportForm).from_params(params, budget: budget)
 
           ImportProject.call(@form) do
             on(:ok) do |broadcast_registry|

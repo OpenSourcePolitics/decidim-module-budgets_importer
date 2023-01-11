@@ -59,7 +59,37 @@ module Decidim
         end
 
         def projects_h
+          # CSV
+          # @projects_h ||= project_csv.to_h
+
           @projects_h ||= JSON.parse(@f.document_text)
+        end
+
+        def project_csv
+          Class.new do
+            attr_accessor :headers
+            attr_reader :lines
+
+            def initialize(document)
+              @document = document
+              @lines = []
+              build!
+            end
+
+            def build!
+              csv = CSV.foreach(@document.path, row_sep: "\n", col_sep: ";")
+              @headers = csv.first
+              @lines = csv.entries[1..-1]
+            end
+
+            def to_h
+              @lines.each_with_object([]) do |line, array|
+                hash = {}
+                line.each_with_index { |val, key| hash.merge!((@headers[key]).to_s => val) }
+                array << hash
+              end
+            end
+          end.new(@f.document)
         end
 
         def new_project(hash)
@@ -73,7 +103,7 @@ module Decidim
             decidim_category_id: category_id(hash)
           }
 
-          form(Decidim::BudgetsImporter::Admin::ProjectForm).from_params(project_h, component: @f.current_component, budget: budget)
+          form(Decidim::BudgetsImporter::Admin::ProjectForm).from_params(project_h, component: @f.current_component, budget: @f.budget)
         end
 
         # ProjectForm requires the category_id to be present in @f.current_component, if not returns nil
@@ -89,10 +119,14 @@ module Decidim
 
         def related_proposals_ids(hash)
           related_proposals = hash.fetch("related_proposals", [])
-          proposals = Decidim.find_resource_manifest(:proposals).try(:resource_scope, @f.current_component)&.where(id: related_proposals)&.order(title: :asc)
+          proposals = Decidim.find_resource_manifest(:proposals)
+                             .try(:resource_scope, @f.current_component)
+                              &.where(id: related_proposals)
+                              &.order(title: :asc)
+
           proposals_ids = proposals.map(&:id)
 
-          unless (related_proposals - proposals_ids).empty?
+          if (related_proposals - proposals_ids).present?
             raise Decidim::BudgetsImporter::ProposalNotFound.new("Proposals not found", hash["title"][@f.current_user.locale], (related_proposals - proposals_ids))
           end
 
