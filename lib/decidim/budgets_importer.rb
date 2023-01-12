@@ -10,28 +10,51 @@ module Decidim
   # This namespace holds the logic of the `BudgetsImporter` component. This component
   # allows users to create budgets_importer in a participatory space.
   module BudgetsImporter
-    class ProposalNotFound < StandardError
-      attr_reader :ids, :project_title
+    class ImportError < StandardError
+      attr_accessor :flash_msg_type
 
-      def initialize(message, project_title, ids)
-        # Call the parent's constructor to set the message
+      def initialize(message)
         super(message)
-
-        # Store the action in an instance variable
-        @project_title = project_title
-        @ids = ids
       end
     end
-    class CategoryNotFound < StandardError
-      attr_reader :id, :project_title
 
-      def initialize(message, project_title, id)
-        # Call the parent's constructor to set the message
-        super(message)
+    class DependencieNotFound < ImportError
+      attr_accessor :resource
+      attr_reader :id, :project_title, :flash_msg_type
 
-        # Store the action in an instance variable
+      def initialize(i18n_key)
+        @flash_msg_type = :alert
+
+        super(I18n.t(i18n_key, scope: "decidim.budgets_importer.errors.#{resource}", project_title: @project_title, id: @id))
+      end
+
+      def to_flash_format
+        { type: @flash_msg_type, message: self.message }
+      end
+
+      def flash_msg_type
+        @flash_msg_type ||= :alert
+      end
+    end
+
+    class CategoryNotFound < DependencieNotFound
+      def initialize(project_title, id)
         @project_title = project_title
         @id = id
+        @resource = "category"
+        super("not_found")
+      end
+    end
+
+    class ProposalNotFound < DependencieNotFound
+      attr_reader :ids
+
+      def initialize(project_title, ids)
+        @project_title = project_title
+        @ids = ids
+        @id = ids.join(",")
+        @resource = "proposal"
+        super("not_found")
       end
     end
   end

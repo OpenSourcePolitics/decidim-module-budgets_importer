@@ -82,15 +82,15 @@ module Decidim
           context[:current_user]
         end
 
-        # ProjectForm requires the category_id to be present in @f.current_component, if not returns nil
+        # ProjectForm requires the category_id to be present in component, if not returns nil
         def category
           category = component.categories.find_by(id: category_id)
           return category if category.present?
 
-          raise Decidim::BudgetsImporter::CategoryNotFound.new("Category not found", title[current_user.locale], category_id)
+          raise Decidim::BudgetsImporter::CategoryNotFound.new(title[current_user.locale], category_id)
         end
 
-        # ProjectForm requires the category_id to be present in @f.current_component, if not returns nil
+        # ProjectForm requires the category_id to be present in component, if not returns nil
         def scope
           component.scopes.find_by(id: scope_id) || component.scope
         end

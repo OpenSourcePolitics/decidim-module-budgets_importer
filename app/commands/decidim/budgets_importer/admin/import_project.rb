@@ -43,10 +43,8 @@ module Decidim
 
         def import_project!
           import_project_factory.import!
-        rescue Decidim::BudgetsImporter::ProposalNotFound => e
-          broadcast_registry << { type: :alert, message: "Proposals not found for project '#{e.project_title}' : ids '#{e.ids.join(",")}'" }
-        rescue Decidim::BudgetsImporter::CategoryNotFound => e
-          broadcast_registry << { type: :alert, message: "Category ID:'#{e.id}' not found for project '#{e.project_title}'" }
+        rescue Decidim::BudgetsImporter::ProposalNotFound, Decidim::BudgetsImporter::CategoryNotFound => e
+          broadcast_registry << e.to_flash_format
         rescue StandardError => e
           broadcast_registry << { type: :alert, message: "[Error #{e.class}] - #{e.message}" }
         end

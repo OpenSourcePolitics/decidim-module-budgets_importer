@@ -8,6 +8,11 @@ en:
           import_accepted_formats: The file format must be one of CSV, JSON or XLSX
           import_document: Content must be exported from a Decidim application
     budgets_importer:
+      errors:
+        category:
+          not_found: "Category (ID: %{id}) does not exist for project '%{project_title}'"
+      actions:
+        import: Import new projects
       command:
         import:
           error:
