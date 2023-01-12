@@ -4,61 +4,92 @@
     "category": {
       "id": 1,
       "name": {
-        "ca": "Impedit quasi inventore sint quibusdam.",
-        "en": "Est dolorem mollitia sed aperiam.",
-        "machine_translations": {
-          "es": "Et accusamus omnis laboriosam sapiente."
-        }
+        "en": "Category example"
       }
     },
     "scope": {
-      "id": 17,
+      "id": 3,
       "name": {
-        "ca": "Lake Cory",
-        "en": "Lake Cory",
-        "es": "Lake Cory"
+        "en": "North Yvone"
       }
     },
     "participatory_space": {
       "id": 1,
-      "url": "http://localhost:3000/processes/transfer-push?participatory_process_slug=transfer-push"
+      "url": "http://localhost:3000/processes/strikebreaker-agree?participatory_process_slug=strikebreaker-agree"
     },
     "component": {
       "id": 4
     },
     "title": {
-      "ca": "Quae recusandae.",
-      "en": "Example title",
-      "es": "",
-      "machine_translations": {
-        "es": "Quos reiciendis."
-      }
+      "en": "Occaecati qui."
     },
     "description": {
-      "ca": "<p>Enim nesciunt amet. Tenetur provident debitis. Quisquam pariatur repellat.</p>",
-      "en": "<p>Example description</p>",
-      "es": "",
-      "machine_translations": {
-        "es": "<p>Doloremque ut distinctio. Laudantium amet distinctio. Qui non ipsam.</p>"
-      }
+      "en": "<p>Voluptates sequi sit. Odio sed consectetur. Qui in nisi.</p>"
     },
     "budget": {
       "id": 1
     },
-    "budget_amount": 71662666,
+    "budget_amount": 40775012,
     "confirmed_votes": 0,
     "comments": 2,
-    "created_at": "2023-01-10 15:48:12 UTC",
-    "url": "http://localhost:3000/processes/transfer-push/f/4/budgets/1/projects/1",
+    "created_at": "2023-01-12 13:24:20 UTC",
+    "url": "http://localhost:3000/processes/strikebreaker-agree/f/4/budgets/1/projects/1",
     "related_proposals": [
-      1,
-      2
+
     ],
     "related_proposal_titles": [
-      "Proposal title example"
+
     ],
     "related_proposal_urls": [
-      "http://localhost:3000/processes/transfer-push/f/3/proposals/1"
+
+    ]
+  },
+  {
+    "id": 21,
+    "category": {
+      "id": null,
+      "name": {
+        "en": ""
+      }
+    },
+    "scope": {
+      "id": 18,
+      "name": {
+        "en": "Remediosport"
+      }
+    },
+    "participatory_space": {
+      "id": 1,
+      "url": "http://localhost:3000/processes/strikebreaker-agree?participatory_process_slug=strikebreaker-agree"
+    },
+    "component": {
+      "id": 4
+    },
+    "title": {
+      "en": "Project example 2"
+    },
+    "description": {
+      "en": "<p>Project example description 2</p>"
+    },
+    "budget": {
+      "id": 1
+    },
+    "budget_amount": 10000,
+    "confirmed_votes": 0,
+    "comments": 0,
+    "created_at": "2023-01-12 13:42:48 UTC",
+    "url": "http://localhost:3000/processes/strikebreaker-agree/f/4/budgets/1/projects/21",
+    "related_proposals": [
+      2,
+      1
+    ],
+    "related_proposal_titles": [
+      "Nihil occaecati. Similique.",
+      "Proposal example"
+    ],
+    "related_proposal_urls": [
+      "http://localhost:3000/processes/strikebreaker-agree/f/3/proposals/2",
+      "http://localhost:3000/processes/strikebreaker-agree/f/3/proposals/1"
     ]
   }
 ]
