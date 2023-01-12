@@ -34,100 +34,68 @@ module Decidim
 
           let(:command) { described_class.new(form) }
 
-          it "broadcasts ok" do
-            expect { command.call }.to broadcast(:ok)
+          shared_examples_for "saves imported projects" do
+            it "broadcasts ok" do
+              expect { command.call }.to broadcast(:ok)
+            end
+
+            it "creates the projects" do
+              expect do
+                command.call
+              end.to change { Decidim::Budgets::Project.where(budget: budget).count }.by(2)
+            end
           end
 
-          it "creates the projects" do
-            expect do
-              command.call
-            end.to change { Decidim::Budgets::Project.where(budget: budget).count }.by(2)
+          shared_examples_for "does not save imported projects" do
+            it "broadcasts invalid" do
+              expect { command.call }.to broadcast(:invalid)
+            end
+
+            it "does not create the projects" do
+              expect do
+                command.call
+              end.to change { Decidim::Budgets::Project.where(budget: budget).count }.by(0)
+            end
           end
+
+          it_behaves_like "saves imported projects"
 
           describe "when document is CSV" do
             let(:filename) { "projects-import.csv" }
             let(:mime_type) { "text/csv" }
 
-            it "broadcasts ok" do
-              expect { command.call }.to broadcast(:ok)
-            end
-
-            it "creates the projects" do
-              expect do
-                command.call
-              end.to change { Decidim::Budgets::Project.where(budget: budget).count }.by(2)
-            end
+            it_behaves_like "saves imported projects"
           end
 
-          describe "when document is CSV" do
+          describe "when document is XLSX" do
             let(:filename) { "projects-import.xlsx" }
             let(:mime_type) { "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }
 
-            it "broadcasts ok" do
-              expect { command.call }.to broadcast(:ok)
-            end
-
-            it "creates the projects" do
-              expect do
-                command.call
-              end.to change { Decidim::Budgets::Project.where(budget: budget).count }.by(2)
-            end
+            it_behaves_like "saves imported projects"
           end
 
           describe "when the form is invalid" do
             let(:valid) { false }
 
-            it "broadcasts invalid" do
-              expect { command.call }.to broadcast(:invalid)
-            end
-
-            it "doesn't create the project" do
-              expect do
-                command.call
-              end.to change(Decidim::Budgets::Project, :count).by(0)
-            end
+            it_behaves_like "does not save imported projects"
           end
 
           context "when category ID does not exist" do
             let(:category) { create(:category) }
 
-            it "broadcasts invalid" do
-              expect { command.call }.to broadcast(:invalid)
-            end
-
-            it "doesn't create the project" do
-              expect do
-                command.call
-              end.to change(Decidim::Budgets::Project, :count).by(0)
-            end
+            it_behaves_like "does not save imported projects"
           end
 
           context "when related proposal ID does not exist in participatory space" do
             let!(:proposal) { create(:proposal, id: 1) }
 
-            it "broadcasts invalid" do
-              expect { command.call }.to broadcast(:invalid)
-            end
-
-            it "doesn't create the project" do
-              expect do
-                command.call
-              end.to change(Decidim::Budgets::Project, :count).by(0)
-            end
+            it_behaves_like "does not save imported projects"
           end
 
           context "when one of related proposals ID does not exist" do
             let!(:proposal) { create(:proposal, id: 10, component: proposal_component) }
 
-            it "broadcasts invalid" do
-              expect { command.call }.to broadcast(:invalid)
-            end
-
-            it "doesn't create the project" do
-              expect do
-                command.call
-              end.to change(Decidim::Budgets::Project, :count).by(0)
-            end
+            it_behaves_like "does not save imported projects"
           end
         end
       end
