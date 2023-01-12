@@ -11,10 +11,8 @@ module Decidim
           let(:current_user) { create :user, :admin, :confirmed, organization: organization }
           let(:participatory_process) { create :participatory_process, organization: organization }
           let(:current_component) { create(:component, manifest_name: :budgets, participatory_space: participatory_process) }
-          let!(:proposals) do
-            (1..3).map { |idx| build(:proposal, :accepted, id: idx, decidim_component_id: current_component.id).tap { |proposal| proposal.save(validate: false) } }
-          end
-          let!(:proposal) { proposals.first }
+          let!(:proposal_component) { create(:proposal_component, participatory_space: participatory_process) }
+          let!(:proposal) { create(:proposal, id: 1, component: proposal_component) }
           let(:budget) { create :budget, component: current_component }
           let!(:category) { create(:category, id: 1, participatory_space: current_component.participatory_space) }
           let(:document) { fixture_file_upload file_fixture(filename), mime_type }
@@ -74,11 +72,31 @@ module Decidim
             end
           end
 
-          context "when category id does not exist" do
+          context "when category ID does not exist" do
             let(:category) { create(:category) }
 
             it "broadcasts invalid" do
               expect { command.call }.to broadcast(:invalid)
+            end
+
+            it "doesn't create the project" do
+              expect do
+                command.call
+              end.to change(Decidim::Budgets::Project, :count).by(0)
+            end
+          end
+
+          context "when related proposal ID does not exist in participatory space" do
+            let(:proposal) { create(:proposal) }
+
+            it "broadcasts invalid" do
+              expect { command.call }.to broadcast(:invalid)
+            end
+
+            it "doesn't create the project" do
+              expect do
+                command.call
+              end.to change(Decidim::Budgets::Project, :count).by(0)
             end
           end
         end

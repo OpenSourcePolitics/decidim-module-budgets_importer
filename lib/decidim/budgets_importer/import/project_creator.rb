@@ -21,8 +21,8 @@ module Decidim
             resource,
             current_user
           ) do
-            resource.save!
             link_proposals_for!(resource)
+            resource.save!
           end
         end
 
@@ -67,7 +67,10 @@ module Decidim
         end
 
         def proposal_ids
-          data[:related_proposals]&.split(",")
+          data[:related_proposals]
+            &.split(",")
+            &.flatten
+            &.map(&:to_i)
         end
 
         def component
@@ -97,6 +100,9 @@ module Decidim
 
         def link_proposals_for!(project)
           proposals = project.sibling_scope(:proposals).where(id: proposal_ids)
+          missing_ids = proposal_ids - proposals.map(&:id)
+          raise Decidim::BudgetsImporter::ProposalNotFound.new(title[current_user.locale], missing_ids) if missing_ids.present?
+
           project.link_resources(proposals, "included_proposals")
         end
 

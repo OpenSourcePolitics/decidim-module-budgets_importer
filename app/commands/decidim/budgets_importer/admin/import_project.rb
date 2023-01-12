@@ -19,8 +19,6 @@ module Decidim
         #
         # - :ok when everything is valid.
         # - :invalid if the form wasn't valid and we couldn't proceed.
-        # - :empty_file if the imported file is blank
-        # - :proposal_not_found if a related proposal is inexistant in database
         #
         # Returns nothing.
         def call
@@ -43,7 +41,7 @@ module Decidim
 
         def import_project!
           import_project_factory.import!
-        rescue Decidim::BudgetsImporter::ProposalNotFound, Decidim::BudgetsImporter::CategoryNotFound => e
+        rescue Decidim::BudgetsImporter::ImportError => e
           broadcast_registry << e.to_flash_format
         rescue StandardError => e
           broadcast_registry << { type: :alert, message: "[Error #{e.class}] - #{e.message}" }

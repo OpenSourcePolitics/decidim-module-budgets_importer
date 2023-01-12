@@ -11,6 +11,8 @@ en:
       errors:
         category:
           not_found: "Category (ID: %{id}) does not exist for project '%{project_title}'"
+        proposal:
+          not_found: "Related proposals (ID: '%{id}') does not exist for project '%{project_title}'"
       actions:
         import: Import new projects
       command:
