@@ -45,9 +45,10 @@ module Decidim
               end.to change { Decidim::Budgets::Project.where(budget: budget).count }.by(2)
             end
 
-            it "broadcast_registry is cleared" do
+            it "broadcast_registry is empty" do
               cmd = command.call
-              expect(cmd.send(:broadcast_registry)).to be_empty
+              expect(cmd.broadcast_registry.registry).to be_empty
+              expect(cmd.broadcast_registry).not_to be_invalid
             end
           end
 
@@ -62,9 +63,16 @@ module Decidim
               end.to change { Decidim::Budgets::Project.where(budget: budget).count }.by(0)
             end
 
-            it "broadcast_registry is cleared" do
+            it "broadcast_registry is invalid" do
               cmd = command.call
-              expect(cmd.send(:broadcast_registry)).to be_empty
+
+              if valid
+                expect(cmd.broadcast_registry.registry).not_to be_empty
+                expect(cmd.broadcast_registry).to be_invalid
+              else
+                expect(cmd.broadcast_registry.registry).to be_empty
+                expect(cmd.broadcast_registry).not_to be_invalid
+              end
             end
           end
 
