@@ -6,7 +6,6 @@ module Decidim
       # This class is responsible for creating the imported proposal answers
       # and must be included in proposals component's import manifest.
       class ProjectCreator < Decidim::Admin::Import::Creator
-        # Retuns the resource class to be created with the provided data.
         def self.resource_klass
           Decidim::Budgets::Project
         end
@@ -18,7 +17,7 @@ module Decidim
 
         def finish!
           Decidim.traceability.perform_action!(
-            "project",
+            "create",
             resource,
             current_user
           ) do
