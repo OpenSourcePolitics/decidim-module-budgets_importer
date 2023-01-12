@@ -13,6 +13,7 @@ module Decidim
           let(:current_component) { create(:component, manifest_name: :budgets, participatory_space: participatory_process) }
           let!(:proposal_component) { create(:proposal_component, participatory_space: participatory_process) }
           let!(:proposal) { create(:proposal, id: 1, component: proposal_component) }
+          let!(:proposal_2) { create(:proposal, id: 2, component: proposal_component) }
           let(:budget) { create :budget, component: current_component }
           let!(:category) { create(:category, id: 1, participatory_space: current_component.participatory_space) }
           let(:document) { fixture_file_upload file_fixture(filename), mime_type }
@@ -87,7 +88,21 @@ module Decidim
           end
 
           context "when related proposal ID does not exist in participatory space" do
-            let(:proposal) { create(:proposal) }
+            let!(:proposal) { create(:proposal, id: 1) }
+
+            it "broadcasts invalid" do
+              expect { command.call }.to broadcast(:invalid)
+            end
+
+            it "doesn't create the project" do
+              expect do
+                command.call
+              end.to change(Decidim::Budgets::Project, :count).by(0)
+            end
+          end
+
+          context "when one of related proposals ID does not exist" do
+            let!(:proposal) { create(:proposal, id: 10, component: proposal_component) }
 
             it "broadcasts invalid" do
               expect { command.call }.to broadcast(:invalid)

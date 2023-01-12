@@ -51,7 +51,8 @@
     "created_at": "2023-01-10 15:48:12 UTC",
     "url": "http://localhost:3000/processes/transfer-push/f/4/budgets/1/projects/1",
     "related_proposals": [
-      1
+      1,
+      2
     ],
     "related_proposal_titles": [
       "Proposal title example"
