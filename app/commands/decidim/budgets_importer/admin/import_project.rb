@@ -32,7 +32,8 @@ module Decidim
 
           broadcast(:ok, broadcast_registry)
         ensure
-          broadcast_registry.clear
+          @errors_on_import&.clear
+          broadcast_registry&.clear
         end
 
         private
@@ -63,14 +64,14 @@ module Decidim
           )
         end
 
-        def broadcast_registry
-          @broadcast_registry ||= []
-        end
-
         def errors_on_import(resources)
           @errors_on_import ||= resources.select do |resource|
             (resource.is_a?(ImportError) && resource.try(:flash_msg_type) == :alert) || resource.is_a?(StandardError)
           end
+        end
+
+        def broadcast_registry
+          @broadcast_registry ||= []
         end
       end
     end

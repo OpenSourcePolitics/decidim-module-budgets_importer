@@ -44,6 +44,11 @@ module Decidim
                 command.call
               end.to change { Decidim::Budgets::Project.where(budget: budget).count }.by(2)
             end
+
+            it "broadcast_registry is cleared" do
+              cmd = command.call
+              expect(cmd.send(:broadcast_registry)).to be_empty
+            end
           end
 
           shared_examples_for "does not save imported projects" do
@@ -55,6 +60,11 @@ module Decidim
               expect do
                 command.call
               end.to change { Decidim::Budgets::Project.where(budget: budget).count }.by(0)
+            end
+
+            it "broadcast_registry is cleared" do
+              cmd = command.call
+              expect(cmd.send(:broadcast_registry)).to be_empty
             end
           end
 
