@@ -41,7 +41,7 @@ module Decidim
           it "creates the projects" do
             expect do
               command.call
-            end.to change { Decidim::Budgets::Project.where(budget: budget).count }.by(1)
+            end.to change { Decidim::Budgets::Project.where(budget: budget).count }.by(2)
           end
 
           describe "when document is CSV" do
@@ -55,7 +55,22 @@ module Decidim
             it "creates the projects" do
               expect do
                 command.call
-              end.to change { Decidim::Budgets::Project.where(budget: budget).count }.by(1)
+              end.to change { Decidim::Budgets::Project.where(budget: budget).count }.by(2)
+            end
+          end
+
+          describe "when document is CSV" do
+            let(:filename) { "projects-import.xlsx" }
+            let(:mime_type) { "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }
+
+            it "broadcasts ok" do
+              expect { command.call }.to broadcast(:ok)
+            end
+
+            it "creates the projects" do
+              expect do
+                command.call
+              end.to change { Decidim::Budgets::Project.where(budget: budget).count }.by(2)
             end
           end
 

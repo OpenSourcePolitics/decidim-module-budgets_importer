@@ -14,11 +14,29 @@ module Decidim
       attr_writer :flash_msg_type
 
       def to_flash_format
-        { type: @flash_msg_type, message: message }
+        { type: flash_msg_type, message: message }
       end
 
       def flash_msg_type
         @flash_msg_type ||= :alert
+      end
+    end
+
+    class ImportErrors < ImportError
+      attr_accessor :errors
+
+      def initialize(errors)
+        @errors = errors
+        @resource = "importer"
+        super(I18n.t("errors", scope: "decidim.budgets_importer.errors.#{@resource}", errors_count: @errors.size))
+      end
+
+      def to_flash_format
+        errors.each_with_object([{ type: flash_msg_type, message: message }]) do |error, array|
+          error = ImportError.new(error.message) unless error.is_a?(ImportError)
+
+          array << error.to_flash_format
+        end
       end
     end
 

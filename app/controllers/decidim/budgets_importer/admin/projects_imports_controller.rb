@@ -32,11 +32,14 @@ module Decidim
 
             on(:invalid) do |registry|
               registry&.each do |hash|
-                flash_key = hash[:type] == :alert ? hash[:type] : "#{hash[:type]}_#{rand(1...1000)}"
+                flash_key = if hash[:type] == :alert && flash.now[:alert].blank?
+                              hash[:type]
+                            else
+                              "#{hash[:type]}_#{rand(1...1000)}"
+                            end
 
                 flash.now[flash_key] = hash[:message]
               end
-              flash.now[:alert] ||= "Import failed"
 
               render :new
             end

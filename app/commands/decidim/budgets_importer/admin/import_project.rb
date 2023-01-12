@@ -40,15 +40,18 @@ module Decidim
         attr_reader :f
 
         def import_project!
-          import_project_factory.import!
+          resources = import_project_factory.prepare
+          return import_project_factory.import! if errors_on_import(resources).blank?
+
+          raise Decidim::BudgetsImporter::ImportErrors, @errors_on_import
         rescue Decidim::BudgetsImporter::ImportError => e
-          broadcast_registry << e.to_flash_format
+          (broadcast_registry << e.to_flash_format).flatten!
         rescue StandardError => e
           broadcast_registry << { type: :alert, message: "[Error #{e.class}] - #{e.message}" }
         end
 
         def import_project_factory
-          @import_project_factory ||= Decidim::Admin::Import::ImporterFactory.build(
+          @import_project_factory ||= Decidim::BudgetsImporter::Import::ImporterFactory.build(
             @form.document,
             @form.document.content_type,
             creator: Decidim::BudgetsImporter::Import::ProjectCreator,
@@ -62,6 +65,12 @@ module Decidim
 
         def broadcast_registry
           @broadcast_registry ||= []
+        end
+
+        def errors_on_import(resources)
+          @errors_on_import ||= resources.select do |resource|
+            (resource.is_a?(ImportError) && resource.try(:flash_msg_type) == :alert) || resource.is_a?(StandardError)
+          end
         end
       end
     end

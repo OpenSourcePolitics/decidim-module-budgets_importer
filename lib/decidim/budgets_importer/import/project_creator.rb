@@ -12,6 +12,7 @@ module Decidim
 
         # Add new project to budget and link related proposals
         def produce
+          related_proposals(resource)
           resource
         end
 
@@ -21,8 +22,8 @@ module Decidim
             resource,
             current_user
           ) do
-            link_proposals_for!(resource)
             resource.save!
+            link_proposals!
           end
         end
 
@@ -87,6 +88,8 @@ module Decidim
 
         # ProjectForm requires the category_id to be present in component, if not returns nil
         def category
+          return if category_id.blank?
+
           category = component.categories.find_by(id: category_id)
           return category if category.present?
 
@@ -98,12 +101,16 @@ module Decidim
           component.scopes.find_by(id: scope_id) || component.scope
         end
 
-        def link_proposals_for!(project)
+        def link_proposals!
+          resource.link_resources(@proposals, "included_proposals")
+        end
+
+        def related_proposals(project)
           proposals = project.sibling_scope(:proposals).where(id: proposal_ids)
           missing_ids = proposal_ids - proposals.map(&:id)
           raise Decidim::BudgetsImporter::ProposalNotFound.new(title[current_user.locale], missing_ids) if missing_ids.present?
 
-          project.link_resources(proposals, "included_proposals")
+          @proposals = proposals
         end
 
         def available_locales
