@@ -1,3 +1,5 @@
+![Continuous integration workflow](https://github.com/OpenSourcePolitics/decidim-module-budgets_importer/actions/workflows/ci_budgets_importer.yml/badge.svg)
+
 # Decidim::BudgetsImporter
 
 Decidim budgets importer allows to import Decidim budgets directly from the backoffice.
