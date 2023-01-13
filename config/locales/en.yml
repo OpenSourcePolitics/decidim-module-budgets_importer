@@ -1,34 +1,39 @@
 ---
 en:
   decidim:
-    forms:
-      file_help:
-        file:
-          explanation: Join the import document, please note requirements below
-          import_accepted_formats: The file format must be one of CSV (separated by ';'), JSON or XLSX
-          import_document: Content must be exported from a Decidim application
     budgets_importer:
-      errors:
-        importer:
-          errors: "Canceling import because of %{errors_count} errors"
-        category:
-          not_found: "Category (ID: %{id}) does not exist for project '%{project_title}'"
-        proposal:
-          not_found: "Related proposals (ID: %{id}) does not exist for project '%{project_title}'"
       actions:
         import: Import projects to budget
-      command:
-        import:
-          error:
-            decidim_budgets_project: Project creation failed on import, unknown ID for the budget
       admin:
         projects_imports:
           new:
             callout:
-              help: The file must have column names title/en , description/en (or another locale which you prefer eg. title/ca and body/ca) and budget. Also scope/id, category/id , proposals/id and image/url columns are supported.
-            document_legend: Join the document to import
+              help: The file must have column names title/en , description/en (or
+                another locale which you prefer eg. title/ca and body/ca) and budget.
+                Also scope/id, category/id , proposals/id and image/url columns are
+                supported.
             create: Import
+            document_legend: Join the document to import
             title: Import projects in current budget
+      command:
+        import:
+          error:
+            decidim_budgets_project: Project creation failed on import, unknown ID
+              for the budget
+      errors:
+        category:
+          not_found: 'Category (ID: %{id}) does not exist for project ''%{project_title}'''
+        importer:
+          errors: Canceling import because of %{errors_count} errors
+        proposal:
+          not_found: 'Related proposals (ID: %{id}) does not exist for project ''%{project_title}'''
     components:
       budgets_importer:
         name: BudgetsImporter
+    forms:
+      file_help:
+        file:
+          explanation: Join the import document, please note requirements below
+          import_accepted_formats: The file format must be one of CSV (separated by
+            ';'), JSON or XLSX
+          import_document: Content must be exported from a Decidim application

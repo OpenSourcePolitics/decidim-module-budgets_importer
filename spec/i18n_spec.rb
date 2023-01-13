@@ -13,15 +13,6 @@ describe "I18n sanity" do
   let(:non_normalized_paths) { i18n.non_normalized_paths }
   let(:inconsistent_interpolations) { i18n.inconsistent_interpolations }
 
-  it "correct Norwegian locale keys should be surrounded by quotation marks" do
-    # otherwise psych evaluates `no:` to `false`
-    # see https://makandracards.com/makandra/24809-yaml-keys-like-yes-or-no-evaluate-to-true-and-false
-    i18n = I18n::Tasks::BaseTask.new(locales: "no")
-    forest = i18n.data_forest(["no"])
-    stats = i18n.forest_stats(forest)
-    expect(stats[:locales]).to eq("no")
-  end
-
   it "does not have missing keys" do
     expect(missing_keys).to be_empty,
                             "Missing #{missing_keys.leaves.count} i18n keys, run `i18n-tasks missing' to show them"

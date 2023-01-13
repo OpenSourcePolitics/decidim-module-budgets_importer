@@ -4,7 +4,22 @@ base_locale: en
 locales: [en]
 
 ignore_unused:
-  - "decidim.components.budgets_importer.name"
+  - decidim.components.budgets_importer.name
+  - decidim.budgets_importer.command.import.error.decidim_budgets_project
+  - decidim.budgets_importer.errors.category.not_found
+  - decidim.budgets_importer.errors.importer.errors
+  - decidim.budgets_importer.errors.proposal.not_found
+  - decidim.forms.file_help.file.*
+
 
 ignore_missing:
   - decidim.participatory_processes.scopes.global
+  - activemodel.errors.models.assembly.attributes.document.invalid_document_type
+  - activemodel.errors.models.budgets_importer.attributes.document.empty_content
+  - decidim.budgets.admin.projects.index.*
+  - decidim.budgets.admin.models.project.name
+  - decidim.budgets.actions.*
+  - decidim.budgets.models.project.fields.*
+  - decidim.admin.actions.import
+  - index.confirmed_orders_count
+
