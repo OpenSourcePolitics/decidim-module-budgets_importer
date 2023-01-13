@@ -27,8 +27,7 @@ module Decidim
 
       def initialize(errors)
         @errors = errors
-        @resource = "importer"
-        super(I18n.t("errors", scope: "decidim.budgets_importer.errors.#{@resource}", errors_count: @errors.size))
+        super(I18n.t("errors", scope: "decidim.budgets_importer.errors.importer", errors_count: @errors.size))
       end
 
       def to_flash_format
@@ -40,18 +39,16 @@ module Decidim
       end
     end
 
-    class DependencieNotFound < ImportError
+    class DependencyNotFound < ImportError
       attr_accessor :resource
       attr_reader :id, :project_title
 
       def initialize(i18n_key)
-        @flash_msg_type = :alert
-
         super(I18n.t(i18n_key, scope: "decidim.budgets_importer.errors.#{resource}", project_title: @project_title, id: @id))
       end
     end
 
-    class CategoryNotFound < DependencieNotFound
+    class CategoryNotFound < DependencyNotFound
       def initialize(project_title, id)
         @project_title = project_title
         @id = id
@@ -60,7 +57,7 @@ module Decidim
       end
     end
 
-    class ProposalNotFound < DependencieNotFound
+    class ProposalNotFound < DependencyNotFound
       attr_reader :ids
 
       def initialize(project_title, ids)
