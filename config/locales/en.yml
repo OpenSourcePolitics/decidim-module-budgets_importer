@@ -16,7 +16,7 @@ en:
         proposal:
           not_found: "Related proposals (ID: %{id}) does not exist for project '%{project_title}'"
       actions:
-        import: Import new projects
+        import: Import projects to budget
       command:
         import:
           error:
@@ -24,6 +24,8 @@ en:
       admin:
         projects_imports:
           new:
+            callout:
+              help: The file must have column names title/en , description/en (or another locale which you prefer eg. title/ca and body/ca) and budget. Also scope/id, category/id , proposals/id and image/url columns are supported.
             document_legend: Join the document to import
             create: Import
             title: Import projects in current budget

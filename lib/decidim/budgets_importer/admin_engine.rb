@@ -13,9 +13,15 @@ module Decidim
         resources :budgets do
           resources :projects do
             collection do
-              resources :projects_import, controller: "projects_imports", only: [:new, :create]
+              resources :projects_import, controller: "projects_imports", only: [:new, :create, :show]
             end
           end
+        end
+      end
+
+      initializer "decidim_budgets_importer.admin_mount_routes" do
+        Decidim::Budgets::AdminEngine.routes do
+          mount Decidim::BudgetsImporter::AdminEngine, at: "/", as: "decidim_admin_budgets_importer"
         end
       end
 
