@@ -26,15 +26,15 @@ bundle
 
 Index budget projects view:
 
-<img alt="Index budget projects view" src="./docs/assets/projects_index_view.png" width="300"/>
+<img alt="Index budget projects view" src="./docs/assets/projects_index_view.png" width="500"/>
 
 Import projects in budget:
 
-<img alt="Import projects in budget" src="./docs/assets/import_project_new.png" width="300"/>
+<img alt="Import projects in budget" src="./docs/assets/import_project_new.png" width="500"/>
 
 Errors on projects import:
 
-<img alt="Errors on projects import" src="./docs/assets/errors_on_import.png" width="300"/>
+<img alt="Errors on projects import" src="./docs/assets/errors_on_import.png" width="500"/>
 
 ## Contributing
 
