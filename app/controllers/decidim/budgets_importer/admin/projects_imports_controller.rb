@@ -4,7 +4,7 @@ module Decidim
   module BudgetsImporter
     module Admin
       class ProjectsImportsController < ApplicationController
-        helper_method :budget
+        helper_method :budget, :budget_projects_import_index_path
 
         def new
           enforce_permission_to :import, :projects
@@ -55,6 +55,10 @@ module Decidim
 
         def budget
           @budget ||= Decidim::Budgets::Budget.where(component: current_component).find_by(id: params[:budget_id])
+        end
+
+        def budget_projects_import_index_path(budget)
+          send(current_component.mounted_admin_engine).budget_projects_import_index_path(budget)
         end
       end
     end

@@ -13,9 +13,7 @@
               <%= link_to t("actions.import", scope: "decidim.budgets", name: t("models.project.name", scope: "decidim.budgets.admin")), new_budget_proposals_import_path(budget) if allowed_to? :import_proposals, :project %>
             </li>
             <li class="imports--file imports--projects">
-              <%# TODO: Find import project path %>
-              <% byebug %>
-              <%= link_to t("actions.import", scope: "decidim.budgets_importer", name: t("models.project.name", scope: "decidim.budgets.admin")), "#" if allowed_to? :import_proposals, :project %>
+              <%= link_to t("actions.import", scope: "decidim.budgets_importer", name: t("models.project.name", scope: "decidim.budgets.admin")), new_budget_projects_import_path(budget) if allowed_to? :import_proposals, :project %>
             </li>
           </ul>
         </div>
