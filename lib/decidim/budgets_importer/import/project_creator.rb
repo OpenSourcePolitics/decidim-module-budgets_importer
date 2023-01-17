@@ -31,16 +31,16 @@ module Decidim
 
         def resource
           @resource ||= begin
-                          Decidim::Budgets::Project.new(
-                            component: component,
-                            budget: budget,
-                            title: title,
-                            scope: scope,
-                            category: category,
-                            description: description,
-                            budget_amount: budget_amount
-                          )
-                        end
+            Decidim::Budgets::Project.new(
+              component: component,
+              budget: budget,
+              title: title,
+              scope: scope,
+              category: category,
+              description: description,
+              budget_amount: budget_amount
+            )
+          end
         end
 
         def id

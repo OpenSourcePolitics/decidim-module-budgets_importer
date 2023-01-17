@@ -29,6 +29,8 @@ en:
             decidim_budgets_project: Project creation failed on import, unknown ID
               for the budget
       errors:
+        database:
+          missing_arguments: One or multiple arguments are expected but missing, please check required columns in export.
         category:
           not_found: 'Category (ID: %{id}) does not exist for project ''%{project_title}'''
         importer:

@@ -39,6 +39,12 @@ module Decidim
       end
     end
 
+    class PGViolation < ImportError
+      def initialize
+        super(I18n.t("missing_arguments", scope: "decidim.budgets_importer.errors.database"))
+      end
+    end
+
     class DependencyNotFound < ImportError
       attr_accessor :resource
       attr_reader :id, :project_title
