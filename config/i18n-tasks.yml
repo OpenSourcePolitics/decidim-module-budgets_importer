@@ -10,6 +10,9 @@ ignore_unused:
   - decidim.budgets_importer.errors.importer.errors
   - decidim.budgets_importer.errors.proposal.not_found
   - decidim.forms.file_help.file.*
+  - decidim.assemblies.admin.new_import.accepted_types.{csv,xlsx}
+  - decidim.budgets_importer.errors.database.missing_arguments
+  - decidim.budgets_importer.import.success
 
 
 ignore_missing:

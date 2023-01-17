@@ -25,7 +25,7 @@ module Decidim
               broadcast_registry&.each do |hash|
                 flash.now["#{hash[:type]}_#{rand(1...1000)}"] = hash[:message]
               end
-              flash[:notice] = I18n.t(".success", scope: "decidim.budgets_importer.import")
+              flash[:notice] = I18n.t("success", scope: "decidim.budgets_importer.import")
 
               redirect_to budget_projects_path(budget)
             end

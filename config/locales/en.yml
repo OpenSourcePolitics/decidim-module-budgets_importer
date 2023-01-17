@@ -8,8 +8,6 @@ en:
             csv: CSV
             xlsx: XLSX
     budgets_importer:
-      import:
-        success: Projects successfully imported
       actions:
         import: Import projects to budget
       admin:
@@ -29,14 +27,17 @@ en:
             decidim_budgets_project: Project creation failed on import, unknown ID
               for the budget
       errors:
-        database:
-          missing_arguments: One or multiple arguments are expected but missing, please check required columns in export.
         category:
           not_found: 'Category (ID: %{id}) does not exist for project ''%{project_title}'''
+        database:
+          missing_arguments: One or multiple arguments are expected but missing, please
+            check required columns in export.
         importer:
           errors: Canceling import because of %{errors_count} errors
         proposal:
           not_found: 'Related proposals (ID: %{id}) does not exist for project ''%{project_title}'''
+      import:
+        success: Projects successfully imported
     components:
       budgets_importer:
         name: BudgetsImporter
