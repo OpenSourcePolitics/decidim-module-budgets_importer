@@ -68,6 +68,7 @@ module Decidim
 
           raise Decidim::BudgetsImporter::ImportErrors, @errors_on_import
         rescue Decidim::BudgetsImporter::ImportError => e
+          byebug
           broadcast_registry.register!(e.to_flash_format)
         rescue StandardError => e
           broadcast_registry.register!({ type: :alert, message: "[Error #{e.class}] - #{e.message}" })

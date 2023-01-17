@@ -25,9 +25,9 @@ module Decidim
               broadcast_registry&.each do |hash|
                 flash.now["#{hash[:type]}_#{rand(1...1000)}"] = hash[:message]
               end
-              flash.now[:notice] = "Import succeeded"
+              flash[:notice] = I18n.t(".success", scope: "decidim.budgets_importer.import")
 
-              render :new
+              redirect_to budget_projects_path(budget)
             end
 
             on(:invalid) do |registry|
@@ -43,11 +43,6 @@ module Decidim
 
               render :new
             end
-
-            on(:empty_file) do
-              flash.now[:alert] = "File is empty"
-              render :new
-            end
           end
         end
 
@@ -59,6 +54,10 @@ module Decidim
 
         def budget_projects_import_index_path(budget)
           send(current_component.mounted_admin_engine).budget_projects_import_index_path(budget)
+        end
+
+        def budget_projects_path(budget)
+          send(current_component.mounted_admin_engine).budget_projects_path(budget)
         end
       end
     end

@@ -1,7 +1,15 @@
 ---
 en:
   decidim:
+    assemblies:
+      admin:
+        new_import:
+          accepted_types:
+            csv: CSV
+            xlsx: XLSX
     budgets_importer:
+      import:
+        success: Projects successfully imported
       actions:
         import: Import projects to budget
       admin:

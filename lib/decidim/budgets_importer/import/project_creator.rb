@@ -31,16 +31,16 @@ module Decidim
 
         def resource
           @resource ||= begin
-            Decidim::Budgets::Project.new(
-              component: component,
-              budget: budget,
-              title: title,
-              scope: scope,
-              category: category,
-              description: description,
-              budget_amount: budget_amount
-            )
-          end
+                          Decidim::Budgets::Project.new(
+                            component: component,
+                            budget: budget,
+                            title: title,
+                            scope: scope,
+                            category: category,
+                            description: description,
+                            budget_amount: budget_amount
+                          )
+                        end
         end
 
         def id
@@ -71,7 +71,7 @@ module Decidim
           data[:related_proposals]
             &.split(",")
             &.flatten
-            &.map(&:to_i)
+            &.map(&:to_i) || []
         end
 
         def component
@@ -98,7 +98,9 @@ module Decidim
 
         # ProjectForm requires the category_id to be present in component, if not returns nil
         def scope
-          component.scopes.find_by(id: scope_id) || component.scope
+          return unless component.scopes_enabled? || scope_id.present?
+
+          component.scopes.find_by(id: scope_id).presence
         end
 
         def link_proposals!
