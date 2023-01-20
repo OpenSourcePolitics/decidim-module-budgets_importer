@@ -68,6 +68,8 @@ module Decidim
         end
 
         def proposal_ids
+          return [data[:related_proposals].to_i] if data[:related_proposals].is_a? Float
+
           data[:related_proposals]
             &.split(",")
             &.flatten
