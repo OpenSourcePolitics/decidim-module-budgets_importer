@@ -14,7 +14,7 @@ fr:
         projects_imports:
           new:
             callout:
-              help: Le fichier doit avoir les colonnes title/fr, description/fr (ou une autre langue eg. title/en et description/en) et budget_amount. Les colonnes 'scope/id', 'category/id' et 'related_proposals/id' sont supportées et optionnelles.
+              help: Le fichier doit avoir les colonnes 'title/fr', 'description/fr' (ou une autre langue eg. 'title/en' et 'description/en') et 'budget_amount'. Les colonnes 'scope/id', 'category/id' et 'related_proposals/id' sont supportées et optionnelles.
             create: Importer
             document_legend: Joindre le document à importer
             title: Importer des projets dans le budget
@@ -22,6 +22,10 @@ fr:
         import:
           error:
             decidim_budgets_project: La création du projet dans le budget à échoué, ID du budget inconnu
+          missing:
+            title: Champs requis manquant 'title'
+            description: Champs requis manquant 'description'
+            budget_amount: Champs requis manquant 'budget_amount'
       errors:
         category:
           not_found: "Categorie (ID: %{id}) n'existe pas pour le projet '%{project_title}'"
@@ -42,3 +46,4 @@ fr:
           explanation: Joindre le document à importer, notez les indications ci-dessous
           import_accepted_formats: Le document doit avoir un format CSV (séparé par des ';'), JSON ou XLSX
           import_document: Le contenu doit être exporté d'une application Decidim existante
+

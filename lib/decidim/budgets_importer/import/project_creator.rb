@@ -12,6 +12,8 @@ module Decidim
 
         # Add new project to budget and link related proposals
         def produce
+          check_required_params!
+
           related_proposals(resource)
           resource
         end
@@ -130,6 +132,12 @@ module Decidim
                      end
             hash[locale] = parsed unless parsed.nil?
           end
+        end
+
+        def check_required_params!
+          raise ImportError.new(I18n.t("title", scope: "decidim.budgets_importer.command.import.missing")) if title.blank?
+          raise ImportError.new(I18n.t("description", scope: "decidim.budgets_importer.command.import.missing")) if description.blank?
+          raise ImportError.new(I18n.t("budget_amount", scope: "decidim.budgets_importer.command.import.missing")) if budget_amount.blank?
         end
       end
     end

@@ -14,10 +14,10 @@ en:
         projects_imports:
           new:
             callout:
-              help: The file must have column names title/en , description/en (or
-                another locale which you prefer eg. title/ca and body/ca) and budget.
-                Also scope/id, category/id , proposals/id and image/url columns are
-                supported.
+              help: The file must have column names 'title/en', 'description/en' (or
+                another locale which you prefer eg. 'title/ca' and 'description/ca')
+                and 'budget_amount'. Also 'scope/id', 'category/id' , 'related_proposals/id'
+                and 'image/url' columns are supported.
             create: Import
             document_legend: Join the document to import
             title: Import projects in current budget
@@ -26,6 +26,10 @@ en:
           error:
             decidim_budgets_project: Project creation failed on import, unknown ID
               for the budget
+          missing:
+            budget_amount: Missing required field 'budget_amount'
+            description: Missing required field 'description'
+            title: Missing required field 'title'
       errors:
         category:
           not_found: 'Category (ID: %{id}) does not exist for project ''%{project_title}'''
