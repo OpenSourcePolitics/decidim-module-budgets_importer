@@ -3,7 +3,7 @@
 module Decidim
   module BudgetsImporter
     module Admin
-      class ProjectsImportsController < ApplicationController
+      class ProjectsImportsController < Decidim::BudgetsImporter::Admin::ApplicationController
         helper_method :budget, :budget_projects_import_index_path
 
         def new
