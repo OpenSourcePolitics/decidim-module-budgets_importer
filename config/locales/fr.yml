@@ -14,7 +14,7 @@ fr:
         projects_imports:
           new:
             callout:
-              help: Le fichier doit avoir les colonnes title/fr, description/fr (ou une autre langue eg. title/en et description/en) et budget_amount. Les colonnes 'scope/id', 'category/id' et 'proposals/id' sont supportées et optionnelles.
+              help: Le fichier doit avoir les colonnes title/fr, description/fr (ou une autre langue eg. title/en et description/en) et budget_amount. Les colonnes 'scope/id', 'category/id' et 'related_proposals/id' sont supportées et optionnelles.
             create: Importer
             document_legend: Joindre le document à importer
             title: Importer des projets dans le budget
