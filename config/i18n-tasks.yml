@@ -13,6 +13,7 @@ ignore_unused:
   - decidim.assemblies.admin.new_import.accepted_types.{csv,xlsx}
   - decidim.budgets_importer.errors.database.missing_arguments
   - decidim.budgets_importer.import.success
+  - decidim.budgets_importer.command.import.missing.*
 
 
 ignore_missing:

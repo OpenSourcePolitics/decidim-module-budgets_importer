@@ -4,7 +4,7 @@ module Decidim
   # This holds the decidim-meetings version.
   module BudgetsImporter
     def self.version
-      "0.26.4"
+      "0.26"
     end
   end
 end
