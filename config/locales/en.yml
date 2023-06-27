@@ -16,7 +16,7 @@ en:
             callout:
               help: The file must have column names 'title/en', 'description/en' (or
                 another locale which you prefer eg. 'title/ca' and 'description/ca')
-                and 'budget_amount'. Also 'scope/id', 'category/id' , 'related_proposals/id'
+                and 'budget_amount'. Also 'scope/id', 'category/id' , 'related_proposals'
                 and 'image/url' columns are supported.
             create: Import
             document_legend: Join the document to import
