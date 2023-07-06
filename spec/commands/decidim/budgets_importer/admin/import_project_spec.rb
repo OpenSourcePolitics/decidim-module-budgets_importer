@@ -13,10 +13,10 @@ module Decidim
           let(:current_component) { create(:component, manifest_name: :budgets, participatory_space: participatory_process) }
           let!(:proposal_component) { create(:proposal_component, participatory_space: participatory_process) }
           let!(:proposal) { create(:proposal, id: 1, component: proposal_component) }
-          let!(:proposal_2) { create(:proposal, id: 2, component: proposal_component) }
+          let!(:proposal2) { create(:proposal, id: 2, component: proposal_component) }
           let(:budget) { create :budget, component: current_component }
           let!(:category) { create(:category, id: 1, participatory_space: current_component.participatory_space) }
-          let(:document) { fixture_file_upload file_fixture(filename), mime_type }
+          let(:document) { Rack::Test::UploadedFile.new(file_fixture(filename), mime_type) }
           let(:filename) { "projects-import.json" }
           let(:mime_type) { "application/json" }
           let(:valid) { true }
@@ -60,7 +60,7 @@ module Decidim
             it "does not create the projects" do
               expect do
                 command.call
-              end.to change { Decidim::Budgets::Project.where(budget: budget).count }.by(0)
+              end.not_to(change { Decidim::Budgets::Project.where(budget: budget).count })
             end
 
             it "broadcast_registry is invalid" do

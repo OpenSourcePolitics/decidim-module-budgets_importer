@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
     "homepage_uri" => "https://decidim.org",
     "source_code_uri" => "https://github.com/decidim/decidim"
   }
-  s.required_ruby_version = ">= 2.7.1"
+  s.required_ruby_version = ">= 3.0"
 
   s.name = "decidim-budgets_importer"
   s.summary = "A decidim budgets_importer module"
@@ -25,5 +25,5 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,lib}/**/*", "LICENSE-AGPLv3.txt", "Rakefile", "README.md"]
 
-  s.add_dependency "decidim-core", "~> #{Decidim::BudgetsImporter.version}"
+  s.add_dependency "decidim-core", "~> #{Decidim::BudgetsImporter.decidim_version}"
 end

@@ -5,7 +5,7 @@ module Decidim
     module Admin
       # A command with all the business logic to import a new project
       # in the system.
-      class ImportProject < Rectify::Command
+      class ImportProject < Decidim::Command
         include Decidim::FormFactory
         # Public: Initializes the command.
         #
@@ -64,6 +64,7 @@ module Decidim
           # Prepare projects before import
           resources = import_project_factory.prepare
           # If one of all projects is invalid it cancels import and raise error
+
           return import_project_factory.import! if errors_on_import(resources).blank?
 
           raise Decidim::BudgetsImporter::ImportErrors, @errors_on_import

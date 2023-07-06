@@ -6,13 +6,13 @@ module Decidim
       class ProjectsImportsController < Decidim::BudgetsImporter::Admin::ApplicationController
         helper_method :budget, :budget_projects_import_index_path
 
+        def show
+          render :new
+        end
+
         def new
           enforce_permission_to :import, :projects
           @form = form(Decidim::BudgetsImporter::Admin::ProjectsImportForm).instance
-        end
-
-        def show
-          render :new
         end
 
         def create

@@ -30,12 +30,12 @@ module Decidim
 
     let(:errors) do
       [
-        BudgetsImporter::ImportError.new(message_1),
-        BudgetsImporter::ImportError.new(message_2)
+        BudgetsImporter::ImportError.new(message1),
+        BudgetsImporter::ImportError.new(message2)
       ]
     end
-    let(:message_1) { "First import error" }
-    let(:message_2) { "Second import error" }
+    let(:message1) { "First import error" }
+    let(:message2) { "Second import error" }
 
     it "is a ImportError" do
       expect(subject).to be_a BudgetsImporter::ImportError
