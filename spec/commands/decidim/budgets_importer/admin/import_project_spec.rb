@@ -16,9 +16,11 @@ module Decidim
           let!(:proposal2) { create(:proposal, id: 2, component: proposal_component) }
           let(:budget) { create :budget, component: current_component }
           let!(:category) { create(:category, id: 1, participatory_space: current_component.participatory_space) }
-          let(:document) { Rack::Test::UploadedFile.new(file_fixture(filename), mime_type) }
-          let(:filename) { "projects-import.json" }
-          let(:mime_type) { "application/json" }
+          let(:document) { upload_test_file(fixture_test_file(filename, mime_type)) }
+          let(:filename) { "projects-import.csv" }
+          let(:mime_type) { "text/csv" }
+          let(:blob) { ActiveStorage::Blob.find_signed(document) }
+          let(:blob_file_path) { ActiveStorage::Blob.service.path_for(blob.key) }
           let(:valid) { true }
           let!(:form) do
             double(
@@ -27,8 +29,8 @@ module Decidim
               current_component: current_component,
               current_user: current_user,
               budget: budget,
-              document: document,
-              document_text: document.read
+              blob: blob,
+              file_path: blob_file_path
             )
           end
 
@@ -78,9 +80,9 @@ module Decidim
 
           it_behaves_like "saves imported projects"
 
-          describe "when document is CSV" do
-            let(:filename) { "projects-import.csv" }
-            let(:mime_type) { "text/csv" }
+          describe "when document is JSON" do
+            let(:filename) { "projects-import.json" }
+            let(:mime_type) { "application/json" }
 
             it_behaves_like "saves imported projects"
           end
