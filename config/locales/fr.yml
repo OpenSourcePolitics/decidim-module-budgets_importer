@@ -14,27 +14,33 @@ fr:
         projects_imports:
           new:
             callout:
-              help: Le fichier doit avoir les colonnes 'title/fr', 'description/fr' (ou une autre langue eg. 'title/en' et 'description/en') et 'budget_amount'. Les colonnes 'scope/id', 'category/id' et 'related_proposals' sont supportées et optionnelles.
+              help: Le fichier doit avoir les colonnes 'title/fr', 'description/fr'
+                (ou une autre langue eg. 'title/en' et 'description/en') et 'budget_amount'.
+                Les colonnes 'scope/id', 'category/id' et 'related_proposals' sont
+                supportées et optionnelles.
             create: Importer
             document_legend: Joindre le document à importer
             title: Importer des projets dans le budget
       command:
         import:
           error:
-            decidim_budgets_project: La création du projet dans le budget à échoué, ID du budget inconnu
+            decidim_budgets_project: La création du projet dans le budget à échoué,
+              ID du budget inconnu
           missing:
-            title: "Champs requis manquant 'title' (ID: %{resource_id})"
-            description: "Champs requis manquant 'description' (ID: %{resource_id})"
-            budget_amount: "Champs requis manquant 'budget_amount' (ID: %{resource_id})"
+            budget_amount: 'Champs requis manquant ''budget_amount'' (ID: %{resource_id})'
+            description: 'Champs requis manquant ''description'' (ID: %{resource_id})'
+            title: 'Champs requis manquant ''title'' (ID: %{resource_id})'
       errors:
         category:
-          not_found: "Categorie (ID: %{id}) n'existe pas pour le projet '%{project_title}'"
+          not_found: 'Categorie (ID: %{id}) n''existe pas pour le projet ''%{project_title}'''
         database:
-          missing_arguments: Un ou plusieurs arguments sont requis et manquants, veuillez vous assurer que toutes les colonnes sont présentes.
+          missing_arguments: Un ou plusieurs arguments sont requis et manquants, veuillez
+            vous assurer que toutes les colonnes sont présentes.
         importer:
           errors: Import annulé à cause de %{errors_count} erreur(s)
         proposal:
-          not_found: "Les propositions liées (ID: %{id}) n'existent pas pour le projet '%{project_title}'"
+          not_found: 'Les propositions liées (ID: %{id}) n''existent pas pour le projet
+            ''%{project_title}'''
       import:
         success: Projet importé avec succès
     components:
@@ -44,6 +50,7 @@ fr:
       file_help:
         file:
           explanation: Joindre le document à importer, notez les indications ci-dessous
-          import_accepted_formats: Le document doit avoir un format CSV (séparé par des ';'), JSON ou XLSX
-          import_document: Le contenu doit être exporté d'une application Decidim existante
-
+          import_accepted_formats: Le document doit avoir un format CSV (séparé par
+            des ';'), JSON ou XLSX
+          import_document: Le contenu doit être exporté d'une application Decidim
+            existante
