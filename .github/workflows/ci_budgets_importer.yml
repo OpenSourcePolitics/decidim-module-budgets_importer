@@ -37,3 +37,14 @@ jobs:
         with:
           ruby_version: ${{ env.RUBY_VERSION }}
           node_version: ${{ env.NODE_VERSION }}
+  release:
+    name: Generate release and push to RubyGems
+    needs: [main]
+    if: "github.ref == 'refs/heads/master'"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Github release and RubyGems push
+        uses: OpenSourcePolitics/decidim-publish-gem-action@master
+        with:
+          rubygems_api_key: ${{ secrets.RUBYGEMS_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
