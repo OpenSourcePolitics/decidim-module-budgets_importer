@@ -8,7 +8,6 @@ module Decidim
       describe ProjectsImportForm do
         subject { form }
 
-        # let(:document) { upload_test_file(file_fixture("projects-import.json"), mime_type) }
         let(:document) { Rack::Test::UploadedFile.new(file_fixture("projects-import.json"), mime_type) }
         let(:mime_type) { "application/json" }
         let(:component) { create(:component) }
