@@ -23,9 +23,9 @@ fr:
           error:
             decidim_budgets_project: La création du projet dans le budget à échoué, ID du budget inconnu
           missing:
-            title: Champs requis manquant 'title'
-            description: Champs requis manquant 'description'
-            budget_amount: Champs requis manquant 'budget_amount'
+            title: "Champs requis manquant 'title' (ID: %{resource_id})"
+            description: "Champs requis manquant 'description' (ID: %{resource_id})"
+            budget_amount: "Champs requis manquant 'budget_amount' (ID: %{resource_id})"
       errors:
         category:
           not_found: "Categorie (ID: %{id}) n'existe pas pour le projet '%{project_title}'"

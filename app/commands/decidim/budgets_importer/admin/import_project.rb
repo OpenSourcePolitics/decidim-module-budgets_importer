@@ -78,8 +78,8 @@ module Decidim
 
         def import_project_factory
           @import_project_factory ||= Decidim::BudgetsImporter::Import::ImporterFactory.build(
-            @form.document,
-            @form.document.content_type,
+            @form.blob,
+            @form.blob.content_type,
             creator: Decidim::BudgetsImporter::Import::ProjectCreator,
             context: {
               current_component: @form.current_component,

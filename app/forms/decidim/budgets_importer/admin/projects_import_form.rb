@@ -8,6 +8,7 @@ module Decidim
       #
       class ProjectsImportForm < Form
         include Decidim::HasUploadValidations
+        include ActiveStorage::Blob::Analyzable
         delegate :budget,
                  to: :context, prefix: false, allow_nil: true
 
@@ -31,7 +32,6 @@ module Decidim
         attribute :document
         validates :document, presence: true
         validate :document_type_must_be_valid
-        validate :document_must_have_content
 
         def document_text
           @document_text ||= document&.read
@@ -55,13 +55,7 @@ module Decidim
         end
 
         def document_type
-          document&.content_type
-        end
-
-        def i18n_invalid_document_type_text
-          I18n.t("invalid_document_type",
-                 scope: "activemodel.errors.models.assembly.attributes.document",
-                 valid_mime_types: i18n_valid_mime_types_text)
+          blob&.content_type
         end
 
         def i18n_empty_content
@@ -73,6 +67,14 @@ module Decidim
           ACCEPTED_TYPES.keys.map do |mime_type|
             I18n.t(mime_type, scope: "decidim.assemblies.admin.new_import.accepted_types")
           end.join(", ")
+        end
+
+        def blob
+          @blob ||= ActiveStorage::Blob.find_signed(document) if document.presence.is_a?(String)
+        end
+
+        def file_path
+          ActiveStorage::Blob.service.path_for(blob.key) if blob.respond_to? :key
         end
       end
     end
