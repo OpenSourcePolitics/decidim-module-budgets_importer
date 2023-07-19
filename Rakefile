@@ -33,7 +33,7 @@ def fix_babel_configs(path)
     ['@babel/plugin-transform-regenerator', { 'async': false }]
   ]
 }")
-  puts "Successfully modified !
+    puts "Successfully modified !
   You must now run to finish installing development_app:
   cd development_app && yarn install && bundle exec bin/webpack
   "
