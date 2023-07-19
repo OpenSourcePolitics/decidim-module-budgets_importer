@@ -43,6 +43,12 @@ module Decidim
           errors.add(:document, i18n_invalid_document_type_text)
         end
 
+        def i18n_invalid_document_type_text
+          I18n.t("invalid_document_type",
+                 scope: "activemodel.errors.models.assembly.attributes.document",
+                 valid_mime_types: i18n_valid_mime_types_text)
+        end
+
         def document_must_have_content
           return if document_text.present?
 

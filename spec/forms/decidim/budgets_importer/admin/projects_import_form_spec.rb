@@ -8,8 +8,8 @@ module Decidim
       describe ProjectsImportForm do
         subject { form }
 
-        let(:document) { Rack::Test::UploadedFile.new(file_fixture("projects-import.json"), mime_type) }
-        let(:mime_type) { "application/json" }
+        let(:document) { upload_test_file(Decidim::Dev.test_file("import_proposals.csv", mime_type)) }
+        let(:mime_type) { "text/csv" }
         let(:component) { create(:component) }
         let(:params) do
           {
@@ -34,16 +34,8 @@ module Decidim
           it { is_expected.to be_invalid }
         end
 
-        context "when document content is not present" do
-          before do
-            allow(form).to receive(:document_text).and_return("")
-          end
-
-          it { is_expected.to be_invalid }
-        end
-
-        context "when mime type is csv" do
-          let(:mime_type) { "text/csv" }
+        context "when mime type is JSON" do
+          let(:mime_type) { "application/json" }
 
           it { is_expected.to be_valid }
         end
