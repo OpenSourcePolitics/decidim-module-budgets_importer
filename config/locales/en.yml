@@ -27,9 +27,9 @@ en:
             decidim_budgets_project: Project creation failed on import, unknown ID
               for the budget
           missing:
-            budget_amount: Missing required field 'budget_amount'
-            description: Missing required field 'description'
-            title: Missing required field 'title'
+            budget_amount: 'Missing required field ''budget_amount'' (ID: %{resource_id})'
+            description: 'Missing required field ''description'' (ID: %{resource_id})'
+            title: 'Missing required field ''title'' (ID: %{resource_id})'
       errors:
         category:
           not_found: 'Category (ID: %{id}) does not exist for project ''%{project_title}'''

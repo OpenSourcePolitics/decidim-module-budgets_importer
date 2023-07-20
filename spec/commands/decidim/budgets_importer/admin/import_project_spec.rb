@@ -13,12 +13,14 @@ module Decidim
           let(:current_component) { create(:component, manifest_name: :budgets, participatory_space: participatory_process) }
           let!(:proposal_component) { create(:proposal_component, participatory_space: participatory_process) }
           let!(:proposal) { create(:proposal, id: 1, component: proposal_component) }
-          let!(:proposal_2) { create(:proposal, id: 2, component: proposal_component) }
+          let!(:proposal2) { create(:proposal, id: 2, component: proposal_component) }
           let(:budget) { create :budget, component: current_component }
           let!(:category) { create(:category, id: 1, participatory_space: current_component.participatory_space) }
-          let(:document) { fixture_file_upload file_fixture(filename), mime_type }
-          let(:filename) { "projects-import.json" }
-          let(:mime_type) { "application/json" }
+          let(:document) { upload_test_file(fixture_test_file(filename, mime_type)) }
+          let(:filename) { "projects-import.csv" }
+          let(:mime_type) { "text/csv" }
+          let(:blob) { ActiveStorage::Blob.find_signed(document) }
+          let(:blob_file_path) { ActiveStorage::Blob.service.path_for(blob.key) }
           let(:valid) { true }
           let!(:form) do
             double(
@@ -27,8 +29,8 @@ module Decidim
               current_component: current_component,
               current_user: current_user,
               budget: budget,
-              document: document,
-              document_text: document.read
+              blob: blob,
+              file_path: blob_file_path
             )
           end
 
@@ -60,7 +62,7 @@ module Decidim
             it "does not create the projects" do
               expect do
                 command.call
-              end.to change { Decidim::Budgets::Project.where(budget: budget).count }.by(0)
+              end.not_to(change { Decidim::Budgets::Project.where(budget: budget).count })
             end
 
             it "broadcast_registry is invalid" do
@@ -78,9 +80,9 @@ module Decidim
 
           it_behaves_like "saves imported projects"
 
-          describe "when document is CSV" do
-            let(:filename) { "projects-import.csv" }
-            let(:mime_type) { "text/csv" }
+          describe "when document is JSON" do
+            let(:filename) { "projects-import.json" }
+            let(:mime_type) { "application/json" }
 
             it_behaves_like "saves imported projects"
           end

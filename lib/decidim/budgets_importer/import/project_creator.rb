@@ -32,17 +32,15 @@ module Decidim
         private
 
         def resource
-          @resource ||= begin
-            Decidim::Budgets::Project.new(
-              component: component,
-              budget: budget,
-              title: title,
-              scope: scope,
-              category: category,
-              description: description,
-              budget_amount: budget_amount
-            )
-          end
+          @resource ||= Decidim::Budgets::Project.new(
+            component: component,
+            budget: budget,
+            title: title,
+            scope: scope,
+            category: category,
+            description: description,
+            budget_amount: budget_amount
+          )
         end
 
         def id
@@ -135,9 +133,9 @@ module Decidim
         end
 
         def check_required_params!
-          raise ImportError, I18n.t("title", scope: "decidim.budgets_importer.command.import.missing") if title.blank?
-          raise ImportError.new(I18n.t("description", scope: "decidim.budgets_importer.command.import.missing")) if description.blank?
-          raise ImportError.new(I18n.t("budget_amount", scope: "decidim.budgets_importer.command.import.missing")) if budget_amount.blank?
+          raise ImportError, I18n.t("title", scope: "decidim.budgets_importer.command.import.missing", resource_id: id) if title.blank?
+          raise ImportError, I18n.t("description", scope: "decidim.budgets_importer.command.import.missing", resource_id: id) if description.blank?
+          raise ImportError, I18n.t("budget_amount", scope: "decidim.budgets_importer.command.import.missing", resource_id: id) if budget_amount.blank?
         end
       end
     end

@@ -31,7 +31,7 @@ module Decidim
         # Customization:
 
         # If scope does not exist, add Global scope to project
-        # validates :scope, presence: true, if: ->(form) { form.decidim_scope_id.present? }
+        #  validates :scope, presence: true, if: ->(form) { form.decidim_scope_id.present? }
 
         # decidim_scope_id : belongs to causes an inconsistency where validation fail on loop.
         # validates :decidim_scope_id, scope_belongs_to_component: true, if: ->(form) { form.decidim_scope_id.present? }
@@ -68,14 +68,14 @@ module Decidim
         #
         # Returns a Decidim::Scope
         def scope
-          @scope ||= current_component.scopes.find_by(id: @decidim_scope_id) || current_component.scope
+          @scope ||= @attributes["decidim_scope_id"].value ? current_component.scopes.find_by(id: @attributes["decidim_scope_id"].value) : current_component.scope
         end
 
         # Scope identifier
         #
         # Returns the scope identifier related to the project
         def decidim_scope_id
-          @decidim_scope_id || scope&.id
+          super || scope&.id
         end
 
         private

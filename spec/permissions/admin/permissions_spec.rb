@@ -6,13 +6,13 @@ module Decidim::BudgetsImporter::Admin
   describe Permissions do
     subject { described_class.new(user, permission_action, context).permissions.allowed? }
 
-    let(:organization) { create :organization }
+    let(:organization) { create(:organization) }
     let(:context) do
       {
         current_organization: organization
       }
     end
-    let(:user) { create :user, :admin, organization: organization }
+    let(:user) { create(:user, :admin, organization: organization) }
     let(:action) do
       { scope: :admin, action: :read, subject: :budgets_importer }
     end
@@ -39,7 +39,7 @@ module Decidim::BudgetsImporter::Admin
     end
 
     context "when user is not admin" do
-      let(:user) { create :user, organization: organization }
+      let(:user) { create(:user, organization: organization) }
 
       it_behaves_like "permission is not set"
     end
