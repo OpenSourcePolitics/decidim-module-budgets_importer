@@ -3,7 +3,6 @@
 require "decidim/budgets_importer/admin"
 require "decidim/budgets_importer/engine"
 require "decidim/budgets_importer/admin_engine"
-require "decidim/budgets_importer/component"
 require "decidim/budgets_importer/import"
 
 module Decidim
