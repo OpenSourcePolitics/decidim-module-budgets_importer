@@ -15,6 +15,7 @@ module Decidim
           check_required_params!
 
           related_proposals(resource)
+          related_taxonomies
           resource
         end
 
@@ -26,6 +27,7 @@ module Decidim
           ) do
             resource.save!
             link_proposals!
+            link_taxonomies!
           end
         end
 
@@ -36,8 +38,6 @@ module Decidim
             component: component,
             budget: budget,
             title: title,
-            scope: scope,
-            category: category,
             description: description,
             budget_amount: budget_amount
           )
@@ -55,14 +55,6 @@ module Decidim
           locale_hasher("description", available_locales + ["machine_translations"])
         end
 
-        def category_id
-          data[:"category/id"]&.to_i
-        end
-
-        def scope_id
-          data[:"scope/id"]&.to_i
-        end
-
         def budget_amount
           data[:budget_amount]
         end
@@ -71,6 +63,15 @@ module Decidim
           return [data[:related_proposals].to_i] if data[:related_proposals].is_a? Float
 
           data[:related_proposals]
+            &.split(",")
+            &.flatten
+            &.map(&:to_i) || []
+        end
+
+        def taxonomy_ids
+          return [data[:"taxonomies/ids"].to_i] if data[:"taxonomies/ids"].is_a? Float
+
+          data[:"taxonomies/ids"]
             &.split(",")
             &.flatten
             &.map(&:to_i) || []
@@ -88,25 +89,15 @@ module Decidim
           context[:current_user]
         end
 
-        # ProjectForm requires the category_id to be present in component, if not returns nil
-        def category
-          return if category_id.blank?
-
-          category = component.categories.find_by(id: category_id)
-          return category if category.present?
-
-          raise Decidim::BudgetsImporter::CategoryNotFound.new(title[current_user.locale], category_id)
-        end
-
-        # ProjectForm requires the category_id to be present in component, if not returns nil
-        def scope
-          return unless component.scopes_enabled? || scope_id.present?
-
-          component.scopes.find_by(id: scope_id).presence
-        end
-
         def link_proposals!
           resource.link_resources(@proposals, "included_proposals")
+        end
+
+        def link_taxonomies!
+          taxonomies = Decidim::Taxonomy.where(id: taxonomy_ids)
+          taxonomies.each do |taxonomy|
+            resource.taxonomies << taxonomy
+          end
         end
 
         def related_proposals(project)
@@ -117,6 +108,13 @@ module Decidim
           @proposals = proposals
         end
 
+        def related_taxonomies
+          taxonomies = Decidim::Taxonomy.where(id: taxonomy_ids)
+          missing_ids = taxonomy_ids - taxonomies.map(&:id)
+          raise Decidim::BudgetsImporter::TaxonomyNotFound.new(title[current_user.locale], missing_ids) if missing_ids.present?
+
+          @taxonomies = taxonomies
+        end
         def available_locales
           @available_locales ||= component.organization.available_locales
         end

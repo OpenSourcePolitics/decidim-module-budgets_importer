@@ -53,11 +53,13 @@ module Decidim
       end
     end
 
-    class CategoryNotFound < DependencyNotFound
-      def initialize(project_title, id)
+    class TaxonomyNotFound < DependencyNotFound
+      attr_reader :ids
+      def initialize(project_title, ids)
         @project_title = project_title
-        @id = id
-        @resource = "category"
+        @ids = ids
+        @id = ids.join(",")
+        @resource = "taxonomy"
         super("not_found")
       end
     end
