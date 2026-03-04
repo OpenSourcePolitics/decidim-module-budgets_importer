@@ -55,6 +55,7 @@ module Decidim
 
     class TaxonomyNotFound < DependencyNotFound
       attr_reader :ids
+
       def initialize(project_title, ids)
         @project_title = project_title
         @ids = ids

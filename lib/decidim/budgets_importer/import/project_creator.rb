@@ -116,6 +116,7 @@ module Decidim
 
           @taxonomies = taxonomies
         end
+
         def available_locales
           @available_locales ||= component.organization.available_locales
         end
