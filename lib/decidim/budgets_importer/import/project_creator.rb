@@ -56,7 +56,7 @@ module Decidim
         end
 
         def budget_amount
-          data[:budget_amount]
+          data[:budget_amount].is_a?(Float) ? data[:budget_amount].to_i : data[:budget_amount]
         end
 
         def proposal_ids
@@ -94,9 +94,10 @@ module Decidim
         end
 
         def link_taxonomies!
-          taxonomies = Decidim::Taxonomy.where(id: taxonomy_ids)
-          taxonomies.each do |taxonomy|
-            resource.taxonomies << taxonomy
+          if @taxonomies.present?
+            @taxonomies.each do |taxonomy|
+              resource.taxonomies << taxonomy
+            end
           end
         end
 
