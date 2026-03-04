@@ -1,5 +1,9 @@
 ---
 fr:
+  activemodel:
+    attributes:
+      project:
+        document: Document
   decidim:
     assemblies:
       admin:
@@ -14,9 +18,9 @@ fr:
         projects_imports:
           new:
             callout:
-              help: Le fichier doit avoir les colonnes 'title/fr', 'description/fr'
+              help: Vous ne pouvez importer que des projets d'une plateforme Decidim de version minimale 0.31. Le fichier importé doit avoir les colonnes 'title/fr', 'description/fr'
                 (ou une autre langue eg. 'title/en' et 'description/en') et 'budget_amount'.
-                Les colonnes 'scope/id', 'category/id' et 'related_proposals' sont
+                Les colonnes taxonomies/ids et 'related_proposals' sont
                 supportées et optionnelles.
             create: Importer
             document_legend: Joindre le document à importer
@@ -31,8 +35,8 @@ fr:
             description: 'Champs requis manquant ''description'' (ID: %{resource_id})'
             title: 'Champs requis manquant ''title'' (ID: %{resource_id})'
       errors:
-        category:
-          not_found: 'Categorie (ID: %{id}) n''existe pas pour le projet ''%{project_title}'''
+        taxonomy:
+          not_found: 'Taxonomie (ID: %{id}) n''existe pas pour le projet ''%{project_title}'''
         database:
           missing_arguments: Un ou plusieurs arguments sont requis et manquants, veuillez
             vous assurer que toutes les colonnes sont présentes.

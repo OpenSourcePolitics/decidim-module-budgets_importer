@@ -1,5 +1,9 @@
 ---
 en:
+  activemodel:
+    attributes:
+      project:
+        document: Document
   decidim:
     assemblies:
       admin:
@@ -14,10 +18,10 @@ en:
         projects_imports:
           new:
             callout:
-              help: The file must have column names 'title/en', 'description/en' (or
+              help: You can only import projects from a Decidim platform of miniml version 0.31. The imported file must have column names 'title/en', 'description/en' (or
                 another locale which you prefer eg. 'title/ca' and 'description/ca')
-                and 'budget_amount'. Also 'scope/id', 'category/id' , 'related_proposals'
-                and 'image/url' columns are supported.
+                and 'budget_amount'. Also 'taxonomies/ids' and 'related_proposals'
+                columns are supported.
             create: Import
             document_legend: Join the document to import
             title: Import projects in current budget
@@ -31,8 +35,8 @@ en:
             description: 'Missing required field ''description'' (ID: %{resource_id})'
             title: 'Missing required field ''title'' (ID: %{resource_id})'
       errors:
-        category:
-          not_found: 'Category (ID: %{id}) does not exist for project ''%{project_title}'''
+        taxonomy:
+          not_found: 'Taxonomy (ID: %{id}) does not exist for project ''%{project_title}'''
         database:
           missing_arguments: One or multiple arguments are expected but missing, please
             check required columns in export.
