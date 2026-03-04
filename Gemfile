@@ -8,6 +8,7 @@ gem "decidim"
 gem "decidim-budgets_importer", path: "."
 
 gem "bootsnap", "~> 1.4"
+gem "openssl", "3.3.0"
 gem "puma", ">= 6.3.1"
 
 group :development, :test do

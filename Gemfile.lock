@@ -538,9 +538,7 @@ GEM
     mime-types-data (3.2026.0224)
     mini_magick (4.13.2)
     mini_mime (1.1.5)
-    minitest (6.0.2)
-      drb (~> 2.0)
-      prism (~> 1.5)
+    minitest (5.26.2)
     msgpack (1.8.0)
     multi_xml (0.8.1)
       bigdecimal (>= 3.1, < 5)
@@ -600,7 +598,7 @@ GEM
     omniauth-twitter (1.4.0)
       omniauth-oauth (~> 1.1)
       rack
-    openssl (4.0.1)
+    openssl (3.3.0)
     orm_adapter (0.5.0)
     ostruct (0.6.3)
     package_json (0.2.0)
@@ -630,7 +628,7 @@ GEM
       net-smtp
       premailer (~> 1.7, >= 1.7.9)
     prettyprint (0.2.0)
-    prism (1.9.0)
+    prism (1.4.0)
     psych (5.3.1)
       date
       stringio
@@ -763,9 +761,9 @@ GEM
       rubocop-ast (>= 1.45.1, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 4.0)
-    rubocop-ast (1.49.0)
+    rubocop-ast (1.48.0)
       parser (>= 3.3.7.2)
-      prism (~> 1.7)
+      prism (~> 1.4)
     rubocop-capybara (2.22.1)
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
@@ -917,6 +915,7 @@ DEPENDENCIES
   faker (= 3.5.3)
   letter_opener_web (~> 2.0)
   listen (~> 3.1)
+  openssl (= 3.3.0)
   puma (>= 6.3.1)
   rubocop-faker
   spring (~> 4.0)
