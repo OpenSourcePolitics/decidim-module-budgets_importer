@@ -1,6 +1,20 @@
 name: "[CI] BudgetsImporter"
-on: [push]
-
+on:
+  push:
+    branches:
+      - develop
+      - release/*
+      - "*-stable"
+  pull_request:
+    branches-ignore:
+      - "chore/l10n*"
+    paths:
+      - "*"
+      - ".github/**"
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+  
 env:
   CI: "true"
   RUBY_VERSION: 3.3.4
