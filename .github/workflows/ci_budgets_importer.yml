@@ -14,7 +14,7 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
-  
+
 env:
   CI: "true"
   RUBY_VERSION: 3.3.4
@@ -47,15 +47,3 @@ jobs:
     with:
       test_command: "bundle exec rspec --pattern './spec/**/*_spec.rb'"
     secrets: inherit
-
-  release:
-    name: Generate release and push to RubyGems
-    needs: [main]
-    if: "github.ref == 'refs/heads/master'"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Github release and RubyGems push
-        uses: OpenSourcePolitics/decidim-publish-gem-action@master
-        with:
-          rubygems_api_key: ${{ secrets.RUBYGEMS_API_KEY }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
