@@ -76,20 +76,20 @@ module Decidim
     end
   end
 
-  describe BudgetsImporter::CategoryNotFound do
-    subject { described_class.new project_title, id }
+  describe BudgetsImporter::TaxonomyNotFound do
+    subject { described_class.new project_title, ids }
 
     let(:project_title) { "Project title example" }
-    let(:id) { 10 }
+    let(:ids) { [10, 11] }
 
     it "is a DependencyNotFound" do
       expect(subject).to be_a BudgetsImporter::DependencyNotFound
     end
 
     describe "#to_flash_format" do
-      subject { described_class.new(project_title, id).to_flash_format }
+      subject { described_class.new(project_title, ids).to_flash_format }
 
-      it { is_expected.to eq({ type: :alert, message: "Category (ID: 10) does not exist for project 'Project title example'" }) }
+      it { is_expected.to eq({ type: :alert, message: "Taxonomies (ID: 10,11) does not exist for project 'Project title example'" }) }
     end
   end
 

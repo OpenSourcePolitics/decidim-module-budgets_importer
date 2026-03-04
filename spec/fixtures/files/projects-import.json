@@ -1,16 +1,10 @@
 [
   {
     "id": 1,
-    "category": {
+    "taxonomy": {
       "id": 1,
       "name": {
-        "en": "Category example"
-      }
-    },
-    "scope": {
-      "id": 3,
-      "name": {
-        "en": "North Yvone"
+        "en": "taxonomy example"
       }
     },
     "participatory_space": {
@@ -46,16 +40,10 @@
   },
   {
     "id": 21,
-    "category": {
+    "taxonomy": {
       "id": null,
       "name": {
         "en": ""
-      }
-    },
-    "scope": {
-      "id": 18,
-      "name": {
-        "en": "Remediosport"
       }
     },
     "participatory_space": {

@@ -15,7 +15,7 @@ module Decidim
           let!(:proposal) { create(:proposal, id: 1, component: proposal_component) }
           let!(:proposal2) { create(:proposal, id: 2, component: proposal_component) }
           let(:budget) { create :budget, component: current_component }
-          let!(:category) { create(:category, id: 1, participatory_space: current_component.participatory_space) }
+          let!(:taxonomy) { create(:taxonomy, :with_parent,  id: 1, organization:) }
           let(:document) { upload_test_file(fixture_test_file(filename, mime_type)) }
           let(:filename) { "projects-import.csv" }
           let(:mime_type) { "text/csv" }
@@ -100,8 +100,8 @@ module Decidim
             it_behaves_like "does not save imported projects"
           end
 
-          context "when category ID does not exist" do
-            let(:category) { create(:category) }
+          context "when taxonomy ID does not exist" do
+            let(:taxonomy) { create(:taxonomy) }
 
             it_behaves_like "does not save imported projects"
           end
