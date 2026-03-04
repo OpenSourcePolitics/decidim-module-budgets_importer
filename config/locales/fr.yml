@@ -4,6 +4,12 @@ fr:
     attributes:
       project:
         document: Document
+    errors:
+      models:
+        assembly:
+          attributes:
+            document:
+              invalid_document_type: Type de document invalide
   decidim:
     assemblies:
       admin:
@@ -18,10 +24,11 @@ fr:
         projects_imports:
           new:
             callout:
-              help: Vous ne pouvez importer que des projets d'une plateforme Decidim de version minimale 0.31. Le fichier importé doit avoir les colonnes 'title/fr', 'description/fr'
-                (ou une autre langue eg. 'title/en' et 'description/en') et 'budget_amount'.
-                Les colonnes taxonomies/ids et 'related_proposals' sont
-                supportées et optionnelles.
+              help: Vous ne pouvez importer que des projets d'une plateforme Decidim
+                de version minimale 0.31. Le fichier importé doit avoir les colonnes
+                'title/fr', 'description/fr' (ou une autre langue eg. 'title/en' et
+                'description/en') et 'budget_amount'. Les colonnes taxonomies/ids
+                et 'related_proposals' sont supportées et optionnelles.
             create: Importer
             document_legend: Joindre le document à importer
             title: Importer des projets dans le budget
@@ -35,16 +42,17 @@ fr:
             description: 'Champs requis manquant ''description'' (ID: %{resource_id})'
             title: 'Champs requis manquant ''title'' (ID: %{resource_id})'
       errors:
-        taxonomy:
-          not_found: 'Taxonomie (ID: %{id}) n''existe pas pour le projet ''%{project_title}'''
         database:
           missing_arguments: Un ou plusieurs arguments sont requis et manquants, veuillez
             vous assurer que toutes les colonnes sont présentes.
         importer:
           errors: Import annulé à cause de %{errors_count} erreur(s)
+        not_found: Non trouvé
         proposal:
           not_found: 'Les propositions liées (ID: %{id}) n''existent pas pour le projet
             ''%{project_title}'''
+        taxonomy:
+          not_found: 'Les Taxonomies (ID: %{id}) n''existent pas pour le projet ''%{project_title}'''
       import:
         success: Projet importé avec succès
     components:
