@@ -62,19 +62,15 @@ module Decidim
         def proposal_ids
           return [data[:related_proposals].to_i] if data[:related_proposals].is_a? Float
 
-          data[:related_proposals]
-            &.split(",")
-            &.flatten
-            &.map(&:to_i) || []
+          ids = data[:related_proposals]&.split(",")
+          ids&.flatten&.map(&:to_i) || []
         end
 
         def taxonomy_ids
           return [data[:"taxonomies/ids"].to_i] if data[:"taxonomies/ids"].is_a? Float
 
-          data[:"taxonomies/ids"]
-            &.split(",")
-            &.flatten
-            &.map(&:to_i) || []
+          ids = data[:"taxonomies/ids"]&.split(",")
+          ids&.flatten&.map(&:to_i) || []
         end
 
         def component
