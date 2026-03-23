@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "@tiptap/extension-dropcursor":  "^2.1.13"
+  }
+}

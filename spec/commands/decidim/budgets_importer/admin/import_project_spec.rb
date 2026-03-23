@@ -7,15 +7,15 @@ module Decidim
     module Admin
       describe ImportProject do
         describe "call" do
-          let(:organization) { create :organization }
-          let(:current_user) { create :user, :admin, :confirmed, organization: organization }
-          let(:participatory_process) { create :participatory_process, organization: organization }
+          let(:organization) { create(:organization) }
+          let(:current_user) { create(:user, :admin, :confirmed, organization: organization) }
+          let(:participatory_process) { create(:participatory_process, organization: organization) }
           let(:current_component) { create(:component, manifest_name: :budgets, participatory_space: participatory_process) }
           let!(:proposal_component) { create(:proposal_component, participatory_space: participatory_process) }
           let!(:proposal) { create(:proposal, id: 1, component: proposal_component) }
           let!(:proposal2) { create(:proposal, id: 2, component: proposal_component) }
-          let(:budget) { create :budget, component: current_component }
-          let!(:category) { create(:category, id: 1, participatory_space: current_component.participatory_space) }
+          let(:budget) { create(:budget, component: current_component) }
+          let!(:taxonomy) { create(:taxonomy, :with_parent, id: 1, organization:) }
           let(:document) { upload_test_file(fixture_test_file(filename, mime_type)) }
           let(:filename) { "projects-import.csv" }
           let(:mime_type) { "text/csv" }
@@ -100,8 +100,8 @@ module Decidim
             it_behaves_like "does not save imported projects"
           end
 
-          context "when category ID does not exist" do
-            let(:category) { create(:category) }
+          context "when taxonomy ID does not exist" do
+            let(:taxonomy) { create(:taxonomy) }
 
             it_behaves_like "does not save imported projects"
           end

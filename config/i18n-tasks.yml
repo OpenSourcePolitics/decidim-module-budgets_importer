@@ -14,7 +14,9 @@ ignore_unused:
   - decidim.budgets_importer.errors.database.missing_arguments
   - decidim.budgets_importer.import.success
   - decidim.budgets_importer.command.import.missing.*
-
+  - activemodel.attributes.project.document
+  - decidim.budgets_importer.errors.not_found
+  - decidim.budgets_importer.errors.taxonomy.not_found
 
 ignore_missing:
   - decidim.participatory_processes.scopes.global

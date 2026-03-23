@@ -1,50 +1,49 @@
 name: "[CI] BudgetsImporter"
-on: [push]
+on:
+  push:
+    branches:
+      - develop
+      - release/*
+      - "*-stable"
+  pull_request:
+    branches-ignore:
+      - "chore/l10n*"
+    paths:
+      - "*"
+      - ".github/**"
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
 
 env:
   CI: "true"
-  RUBY_VERSION: 3.0.2
-  NODE_VERSION: 16.9.1
+  RUBY_VERSION: 3.3.4
+  NODE_VERSION: 22.14.0
 
 jobs:
-  main:
-    name: Tests
+  build_app:
+    uses: ./.github/workflows/build_app.yml
+    secrets: inherit
+    name: Build test application
+
+  lint:
+    name: Lint code
     runs-on: ubuntu-latest
-    timeout-minutes: 30
-    services:
-      postgres:
-        image: postgres:11
-        ports: ["5432:5432"]
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+    timeout-minutes: 60
+    steps:
+      - uses: rokroskar/workflow-run-cleanup-action@v0.3.0
+        if: "github.ref != 'refs/heads/develop'"
         env:
-          POSTGRES_PASSWORD: postgres
-    env:
-      DATABASE_USERNAME: postgres
-      DATABASE_PASSWORD: postgres
-      DATABASE_HOST: localhost
-    steps:
-      - name: Linting
-        uses: OpenSourcePolitics/lint-action@master
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      - uses: OpenSourcePolitics/lint-action@master
         with:
           ruby_version: ${{ env.RUBY_VERSION }}
           node_version: ${{ env.NODE_VERSION }}
-      - name: Running rspec
-        uses: OpenSourcePolitics/rspec-action@master
-        with:
-          ruby_version: ${{ env.RUBY_VERSION }}
-          node_version: ${{ env.NODE_VERSION }}
-  release:
-    name: Generate release and push to RubyGems
-    needs: [main]
-    if: "github.ref == 'refs/heads/master'"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Github release and RubyGems push
-        uses: OpenSourcePolitics/decidim-publish-gem-action@master
-        with:
-          rubygems_api_key: ${{ secrets.RUBYGEMS_API_KEY }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  tests:
+    name: Tests
+    needs: build_app
+    uses: ./.github/workflows/test_app.yml
+    with:
+      test_command: "bundle exec rspec --pattern './spec/**/*_spec.rb'"
+    secrets: inherit
