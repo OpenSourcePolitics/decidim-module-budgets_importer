@@ -30,7 +30,6 @@ fr:
                 'description/en') et 'budget_amount'. Les colonnes taxonomies/ids
                 et 'related_proposals' sont supportées et optionnelles.
             create: Importer
-            document_legend: Joindre le document à importer
             title: Importer des projets dans le budget
       command:
         import:

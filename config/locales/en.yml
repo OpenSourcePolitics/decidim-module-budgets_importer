@@ -30,7 +30,6 @@ en:
                 and 'description/ca') and 'budget_amount'. Also 'taxonomies/ids' and
                 'related_proposals' columns are supported.
             create: Import
-            document_legend: Join the document to import
             title: Import projects in current budget
       command:
         import:
